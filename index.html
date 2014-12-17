@@ -7,15 +7,33 @@
 </head>
 <body>
 <script type="text/x-handlebars">
-    <h2>Welcome to Ember.js</h2>
+    <h2>Pokemon Catch Rate</h2>
 
     {{outlet}}
 </script>
 
 <script type="text/x-handlebars" id="index">
+    {{view "select"
+        value=selectedPokemon
+        content=model.pokemon
+        optionValuePath="content.id"
+        optionLabelPath="content.name"
+    }}
+
+    {{view "select"
+        value=selectedLevel
+        content=levels
+        }}
+
     <ul>
-        {{#each item in model}}
+        {{#each item in model.pokemon}}
             <li>{{item.name}}</li>
+        {{/each}}
+    </ul>
+
+    <ul>
+        {{#each pokeball in model.pokeballs}}
+            <li>{{pokeball.id}}.{{pokeball.name}} - {{pokeball.rate}}%</li>
         {{/each}}
     </ul>
 </script>
