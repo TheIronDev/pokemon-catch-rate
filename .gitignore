@@ -26,3 +26,10 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
+
+# Mac
+.DS_Store
+**/.DS_Store
+
+# IDE(a)
+.idea/
