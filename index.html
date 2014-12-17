@@ -15,7 +15,7 @@
 <script type="text/x-handlebars" id="index">
     {{view "select"
         value=selectedPokemon
-        content=model.pokemon
+        content=pokemon
         optionValuePath="content.id"
         optionLabelPath="content.name"
     }}
@@ -26,13 +26,13 @@
         }}
 
     <ul>
-        {{#each item in model.pokemon}}
+        {{#each item in pokemon}}
             <li>{{item.name}}</li>
         {{/each}}
     </ul>
 
     <ul>
-        {{#each pokeball in model.pokeballs}}
+        {{#each pokeball in pokeballs}}
             <li>{{pokeball.id}}.{{pokeball.name}} - {{pokeball.rate}}%</li>
         {{/each}}
     </ul>

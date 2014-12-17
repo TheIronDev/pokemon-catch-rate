@@ -6,24 +6,21 @@ App.Router.map(function() {
 });
 
 App.IndexRoute = Ember.Route.extend({
-  model: function() {
-    return {
-      pokemon: this.pokemon(),
-      pokeballs: this.pokeballs()
-    };
-  },
-  pokemon: function() {
-    return this.store.findAll('pokemon');
-  },
-  pokeballs: function() {
-    return this.store.findAll('pokeball');
+  setupController: function(controller, indexModel) {
+    controller.set('model', indexModel);
   }
 });
 
 App.IndexController = Ember.Controller.extend({
   selectedPokemon: 2,
   selectedLevel: 1,
-  levels: [1,2,3,4,5]
+  levels: [1,2,3,4,5],
+  pokemon: function() {
+    return this.store.findAll('pokemon');
+  }.property(),
+  pokeballs: function() {
+    return this.store.findAll('pokeball');
+  }.property()
 });
 
 App.Pokemon = DS.Model.extend({
