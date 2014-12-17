@@ -14,16 +14,19 @@
 
 <script type="text/x-handlebars" id="index">
     {{view "select"
-        value=selectedPokemon
+        value=selectedPokemonId
         content=pokemon
         optionValuePath="content.id"
-        optionLabelPath="content.name"
-    }}
+        optionLabelPath="content.name" }}
 
     {{view "select"
         value=selectedLevel
         content=levels
         }}
+
+    <div>
+        Selected Pokemon: {{selectedPokemon.name}}
+    </div>
 
     <ul>
         {{#each item in pokemon}}

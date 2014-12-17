@@ -12,28 +12,28 @@ App.IndexRoute = Ember.Route.extend({
 });
 
 App.IndexController = Ember.Controller.extend({
-  selectedPokemon: 2,
+  selectedPokemonId: 1,
   selectedLevel: 1,
   levels: [1,2,3,4,5],
+  selectedPokemon: function(selectedPokemonId) {
+    return this.store.find('pokemon', this.get('selectedPokemonId'));
+  }.property('selectedPokemonId'),
   pokemon: function() {
-    return this.store.findAll('pokemon');
+    return this.store.find('pokemon');
   }.property(),
   pokeballs: function() {
-    return this.store.findAll('pokeball');
+    return this.store.find('pokeball');
   }.property()
 });
 
 App.Pokemon = DS.Model.extend({
   name: DS.attr('string'),
-  maxHP: DS.attr('string'),
-  currentHP: DS.attr('string'),
-  pokeball: DS.hasMany('pokeball', {async: true})
+  maxHP: DS.attr('string')
 });
 
 App.Pokeball = DS.Model.extend({
   name: DS.attr('string'),
-  rate: DS.attr('number'),
-  pokemon: DS.belongsTo('pokemon', {async: true})
+  rate: DS.attr('number')
 });
 
 App.Pokemon.reopenClass({
@@ -41,19 +41,16 @@ App.Pokemon.reopenClass({
     {
       id: 1,
       name: 'Bublasaur',
-      currentHP: 50,
       maxHP: 100
     },
     {
       id: 2,
       name: 'Ivysaur',
-      currentHP: 90,
       maxHP: 100
     },
     {
       id: 3,
       name: 'Venasaur',
-      currentHP: 1,
       maxHP: 100
     }
   ]
