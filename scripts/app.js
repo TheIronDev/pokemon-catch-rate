@@ -67,18 +67,28 @@ App.Pokeball = DS.Model.extend({
 	catchRate: function() {
 
 		// TODO: these variables should be coming from the pokemon or controller
-		var pokemon = this.get('pokemon'),
-			hpMax = pokemon.get('maxHP'),
+		var pokemon = this.get('pokemon');
+
+		if (!pokemon) {
+			return '';
+		}
+
+		var hpMax = pokemon.get('maxHP'),
 			hpCurrent = 1,
 			statusRate = 1,
 			pokemonCatchRate = pokemon.get('catchRate'),
 			ballRate = this.get('ballRate');
 
 		var numerator = ((3 * hpMax - 2 * hpCurrent) * pokemonCatchRate * ballRate),
-			denominator = (3* hpMax);
+			denominator = ( 3 * hpMax),
+			shakeRate = (numerator/denominator) * statusRate,
+			catchProbability;
 
-		return (numerator/denominator * statusRate).toFixed(2);
-	}.property('rate', 'pokemon')
+		shakeRate = shakeRate < 255 ? shakeRate : 255;
+		catchProbability = (((65536 / (255/shakeRate)^0.1875) / 65536));
+
+		return (catchProbability * 100).toFixed(2);
+	}.property('rate', 'pokemon', 'pokemon.maxHP')
 });
 
 App.Pokemon.reopenClass({
@@ -109,20 +119,17 @@ App.Pokeball.reopenClass({
 		{
 			id: 1,
 			name: 'PokeBall',
-			ballRate: 1,
-			pokemon: 1
+			ballRate: 1
 		},
 		{
 			id: 2,
 			name: 'Great Ball',
-			ballRate: 1.5,
-			pokemon: 1
+			ballRate: 1.5
 		},
 		{
 			id: 3,
 			name: 'Ultra Ball',
-			ballRate: 2,
-			pokemon: 1
+			ballRate: 2
 		}
 	]
 });
