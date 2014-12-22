@@ -14,25 +14,28 @@
 
 <script type="text/x-handlebars" id="index">
     {{view "select"
-        value=selectedPokemonId
-        content=pokemon
-        optionValuePath="content.id"
+        value=selectedPokemon
+        content=model.pokemon
+        prompt="Please select a Pokemon"
         optionLabelPath="content.name" }}
 
-    {{view "select"
+    Level: {{view "select"
         value=selectedLevel
-        content=levels
+        content=model.levels
+        prompt="Please select a level"
         }}
 
-    <ul>
-        {{#each item in pokemon}}
-            <li>{{item.name}}</li>
-        {{/each}}
-    </ul>
+    <div class="selectedPokemon">
+        Selected Pokemon:<br/>
+        Name: {{selectedPokemon.name}}<br/>
+        Level: {{selectedPokemon.level}}<br/>
+        BaseHP: {{selectedPokemon.baseHP}}<br/>
+        MaxHP: {{selectedPokemon.maxHP}}
+    </div>
 
     <ul>
-        {{#each pokeball in pokeballs}}
-            <li>{{pokeball.id}}.{{pokeball.name}} - {{pokeball.rate}}%</li>
+        {{#each pokeball in model.pokeballs}}
+            <li>{{pokeball.name}} - {{pokeball.ballRate}} - {{pokeball.catchRate}}%</li>
         {{/each}}
     </ul>
 </script>
