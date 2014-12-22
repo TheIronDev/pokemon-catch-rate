@@ -1,6 +1,10 @@
 App = Ember.Application.create();
 App.ApplicationAdapter = DS.FixtureAdapter;
 
+Ember.TextSupport.reopen({
+	attributeBindings: ["style"]
+})
+
 App.Router.map(function() {
 	// TODO: Pokemon resource Route
 });
@@ -19,6 +23,33 @@ App.IndexRoute = Ember.Route.extend({
 });
 
 App.IndexController = Ember.Controller.extend({
+	currentHPPercent: 100,
+	currentHPPercentString: function() {
+		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
+		return (currentHPPercent === 1 ? 1 : currentHPPercent + '%');
+	}.property('currentHPPercent'),
+	currentHPRangeBackground: function() {
+		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10),
+			currentHPPercentEdge = (currentHPPercent === 100) ? 100 : currentHPPercent + 1,
+			color = 'green';
+
+		if (currentHPPercent < 20) {
+			color = 'red';
+		} else if (currentHPPercent < 50) {
+			color = 'yellow';
+		}
+
+		return 'background: linear-gradient(to right, '+ color +' 0%, '+ color +' '+currentHPPercent+'%, transparent ' + currentHPPercentEdge + '%, transparent 100%);';
+	}.property('currentHPPercent'),
+	currentHPPercentObserver: function(){
+		var hpPercent = this.get('currentHPPercent'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('currentHPPercent', hpPercent);
+		});
+
+	}.observes('currentHPPercent'),
 	selectedPokemonObserver: function() {
 		var thePokemonToSet = this.get('selectedPokemon'),
 			pokeballs = this.get('model.pokeballs');
@@ -63,6 +94,9 @@ App.Pokemon = DS.Model.extend({
 App.Pokeball = DS.Model.extend({
 	name: DS.attr('string'),
 	ballRate: DS.attr('number'),
+	currentHPPercent: DS.attr('number', {
+		defaultValue: 100
+	}),
 	pokemon: DS.belongsTo('pokemon'),
 	catchRate: function() {
 
@@ -74,7 +108,8 @@ App.Pokeball = DS.Model.extend({
 		}
 
 		var hpMax = pokemon.get('maxHP'),
-			hpCurrent = 1,
+			hpPercent = parseInt(this.get('currentHPPercent'), 10),
+			hpCurrent = ((hpPercent === 1) ? 1 : hpMax * hpPercent / 100),
 			statusRate = 1,
 			pokemonCatchRate = pokemon.get('catchRate'),
 			ballRate = this.get('ballRate');
@@ -88,14 +123,14 @@ App.Pokeball = DS.Model.extend({
 		catchProbability = (((65536 / (255/shakeRate)^0.1875) / 65536));
 
 		return (catchProbability * 100).toFixed(2);
-	}.property('rate', 'pokemon', 'pokemon.maxHP')
+	}.property('rate', 'currentHPPercent', 'pokemon', 'pokemon.maxHP', 'pokemon.level')
 });
 
 App.Pokemon.reopenClass({
 	FIXTURES : [
 		{
 			id: 1,
-			name: 'Bublasaur',
+			name: 'Bulbasaur',
 			catchRate: 45,
 			baseHP: 45
 		},
@@ -110,6 +145,18 @@ App.Pokemon.reopenClass({
 			name: 'Venasaur',
 			catchRate: 45,
 			baseHP: 80
+		},
+		{
+			id: 19,
+			name: 'Rattata',
+			catchRate: 255,
+			baseHP: 30
+		},
+		{
+			id: 150,
+			name: 'Mewtwo',
+			catchRate: 3,
+			baseHP: 106
 		}
 	]
 });

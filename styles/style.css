@@ -1,3 +1,23 @@
 html {
     background: #efefef;
 }
+
+.container {
+    border: 1px solid #fff;
+    margin: 0 auto;
+    width: 500px;
+}
+
+.range-current-hp {
+    -webkit-appearance: initial;
+    height: 0.5em;
+    background: green;
+}
+
+.range-current-hp.range-medium {
+    background: yellow;
+}
+
+.range-current-hp.range-low {
+    background: red;
+}
