@@ -14,6 +14,7 @@ App.IndexRoute = Ember.Route.extend({
 		return Ember.RSVP.hash ({
 			pokeballs: this.store.find('pokeball'),
 			pokemon: this.store.find('pokemon'),
+			status: this.store.find('status'),
 			levels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
 				30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57,
 				58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
@@ -41,6 +42,14 @@ App.IndexController = Ember.Controller.extend({
 
 		return 'background: linear-gradient(to right, '+ color +' 0%, '+ color +' '+currentHPPercent+'%, transparent ' + currentHPPercentEdge + '%, transparent 100%);';
 	}.property('currentHPPercent'),
+	currentStatusObserver: function() {
+		var currentStatus = this.get('currentStatus'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('currentStatus', currentStatus);
+		});
+	}.observes('currentStatus'),
 	currentHPPercentObserver: function(){
 		var hpPercent = this.get('currentHPPercent'),
 			pokeballs = this.get('model.pokeballs');
@@ -100,7 +109,6 @@ App.Pokeball = DS.Model.extend({
 	pokemon: DS.belongsTo('pokemon'),
 	catchRate: function() {
 
-		// TODO: these variables should be coming from the pokemon or controller
 		var pokemon = this.get('pokemon');
 
 		if (!pokemon) {
@@ -110,7 +118,8 @@ App.Pokeball = DS.Model.extend({
 		var hpMax = pokemon.get('maxHP'),
 			hpPercent = parseInt(this.get('currentHPPercent'), 10),
 			hpCurrent = ((hpPercent === 1) ? 1 : hpMax * hpPercent / 100),
-			statusRate = 1,
+			currentStatus = this.get('currentStatus'),
+			statusRate = (currentStatus && currentStatus.get('value')) || 1,
 			pokemonCatchRate = pokemon.get('catchRate'),
 			ballRate = this.get('ballRate');
 
@@ -123,7 +132,12 @@ App.Pokeball = DS.Model.extend({
 		catchProbability = (((65536 / (255/shakeRate)^0.1875) / 65536));
 
 		return (catchProbability * 100).toFixed(2);
-	}.property('rate', 'currentHPPercent', 'pokemon', 'pokemon.maxHP', 'pokemon.level')
+	}.property('rate', 'currentHPPercent', 'currentStatus', 'pokemon', 'pokemon.maxHP', 'pokemon.level')
+});
+
+App.Status = DS.Model.extend({
+	name: DS.attr('string'),
+	value: DS.attr('number')
 });
 
 App.Pokemon.reopenClass({
@@ -180,3 +194,40 @@ App.Pokeball.reopenClass({
 		}
 	]
 });
+
+App.Status.reopenClass({
+	FIXTURES: [
+		{
+			id: 1,
+			name: 'None',
+			value: 1
+		},
+		{
+			id: 2,
+			name: 'Sleep',
+			value: 2.5
+		},
+		{
+			id: 3,
+			name: 'Frozen',
+			value: 2.5
+		},
+		{
+			id: 4,
+			name: 'Paralyzed',
+			value: 1.5
+		},
+		{
+			id: 5,
+			name: 'Poison',
+			value: 1.5
+		},
+		{
+			id: 6,
+			name: 'Burn',
+			value: 1.5
+		}
+	]
+});
+
+// 2 for sleep and freeze, 1.5 for paralyze, poison, or burn, and 1 otherwise

@@ -27,6 +27,13 @@
             content=model.levels
             prompt="Level"
             }}
+
+        {{view "select"
+            value=currentStatus
+            content=model.status
+            optionLabelPath="content.name"
+            prompt="Status"
+            }}
     </div>
     <div>
         Health:
