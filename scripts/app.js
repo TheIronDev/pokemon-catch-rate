@@ -69,7 +69,7 @@ App.IndexController = Ember.Controller.extend({
 
 	}.observes('selectedPokemon'),
 	selectedLevelObserver: function() {
-		var selectedLevel = this.get('selectedLevel'),
+		var selectedLevel = this.get('selectedLevel') || 1,
 			pokemonList = this.get('model.pokemon');
 
 		pokemonList.forEach( function( pokemon ) {
@@ -191,6 +191,116 @@ App.Pokeball.reopenClass({
 			id: 3,
 			name: 'Ultra Ball',
 			ballRate: 2
+		},
+		{
+			id: 4,
+			name: 'Safari Ball',
+			ballRate: 1.5
+		},
+		{
+			id: 5,
+			name: 'Master Ball',
+			ballRate: 255
+		},
+		{
+			id: 6,
+			name: 'Level Ball',
+			ballRate: 255
+		},
+		{
+			id: 7,
+			name: 'Lure Ball',
+			ballRate: 255
+		},
+		{
+			id: 8,
+			name: 'Moon Ball',
+			ballRate: 255
+		},
+		{
+			id: 9,
+			name: 'Friend Ball',
+			ballRate: 255
+		},
+		{
+			id: 10,
+			name: 'Love Ball',
+			ballRate: 255
+		},
+		{
+			id: 11,
+			name: 'Heavy Ball',
+			ballRate: 255
+		},
+		{
+			id: 12,
+			name: 'Fast Ball',
+			ballRate: 255
+		},
+		{
+			id: 13,
+			name: 'Sport Ball',
+			ballRate: 255
+		},
+		{
+			id: 14,
+			name: 'Premier Ball',
+			ballRate: 255
+		},
+		{
+			id: 15,
+			name: 'Repeat Ball',
+			ballRate: 255
+		},
+		{
+			id: 16,
+			name: 'Timer Ball',
+			ballRate: 255
+		},
+		{
+			id: 17,
+			name: 'Nest Ball',
+			ballRate: 255
+		},
+		{
+			id: 18,
+			name: 'Net Ball',
+			ballRate: 255
+		},
+		{
+			id: 19,
+			name: 'Dive Ball',
+			ballRate: 255
+		},
+		{
+			id: 20,
+			name: 'Luxury Ball',
+			ballRate: 255
+		},
+		{
+			id: 21,
+			name: 'Heal Ball',
+			ballRate: 255
+		},
+		{
+			id: 22,
+			name: 'Quick Ball',
+			ballRate: 255
+		},
+		{
+			id: 23,
+			name: 'Dusk Ball',
+			ballRate: 255
+		},
+		{
+			id: 24,
+			name: 'Cherish Ball',
+			ballRate: 255
+		},
+		{
+			id: 25,
+			name: 'Park Ball',
+			ballRate: 255
 		}
 	]
 });

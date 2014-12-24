@@ -15,31 +15,34 @@
 </script>
 
 <script type="text/x-handlebars" id="index">
-    <div>
-        {{view "select"
+
+    <div class="battle-details">
+        <div>
+            {{view "select"
             value=selectedPokemon
             content=model.pokemon
             prompt="Pokemon"
             optionLabelPath="content.name" }}
 
-        {{view "select"
+            {{view "select"
             value=selectedLevel
             content=model.levels
             prompt="Level"
             }}
 
-        {{view "select"
+            {{view "select"
             value=currentStatus
             content=model.status
             optionLabelPath="content.name"
             prompt="Status"
             }}
-    </div>
-    <div>
-        Health:
-        {{input type="range" class="range-current-hp" style=currentHPRangeBackground name="range" min="1" max="100" value=currentHPPercent}}
+        </div>
+        <div>
+            Health:
+            {{input type="range" class="range-current-hp" style=currentHPRangeBackground name="range" min="1" max="100" value=currentHPPercent}}
 
-        ({{currentHPPercentString}})
+            ({{currentHPPercentString}})
+        </div>
     </div>
 
     <div class="selectedPokemon">
@@ -50,9 +53,12 @@
         MaxHP: {{selectedPokemon.maxHP}}
     </div>
 
-    <ul>
+    <ul class="pokeball-list">
         {{#each pokeball in model.pokeballs}}
-            <li>{{pokeball.name}} - {{pokeball.catchRate}}%</li>
+            <li class="pokeball">
+                {{pokeball.name}}<br/>
+                {{pokeball.catchRate}}%
+            </li>
         {{/each}}
     </ul>
 </script>

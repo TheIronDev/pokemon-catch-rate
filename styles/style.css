@@ -1,3 +1,7 @@
+* {
+    box-sizing: border-box;
+}
+
 html {
     background: #efefef;
 }
@@ -5,7 +9,14 @@ html {
 .container {
     border: 1px solid #fff;
     margin: 0 auto;
-    width: 500px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.battle-details {
+    margin-left: 35%;
+    text-align: right;
+    width: 65%;
 }
 
 .range-current-hp {
@@ -20,4 +31,16 @@ html {
 
 .range-current-hp.range-low {
     background: red;
+}
+
+.pokeball-list {
+    padding: 0;
+    text-align: center;
+}
+
+.pokeball-list .pokeball {
+    display: inline-block;
+    padding: 0.5em;
+    vertical-align: top;
+    width: 24%;
 }
