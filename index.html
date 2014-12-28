@@ -16,20 +16,14 @@
 
 <script type="text/x-handlebars" id="index">
 
-    <div class="battle-details">
-        <div>
-            {{view "select"
-                value=selectedWildPokemon
-                content=model.pokemon
-                optionLabelPath="content.name" }}
+    <div class="wild-pokemon">
 
-            Lv.
-            {{view "select"
-                value=selectedLevel
-                content=model.levels
-                }}
+        {{pokemon-details
+            bindedPokemon=selectedWildPokemon
+            bindedLevel=selectedLevel
+            pokemonList=model.pokemon
+            levelList=model.levels }}
 
-        </div>
         <div>
             {{view "select"
                 value=currentStatus
@@ -42,15 +36,26 @@
             HP:
             {{input type="range" class="range-current-hp" style=currentHPRangeBackground name="range" min="1" max="100" value=currentHPPercent}}
         </div>
+
+        <div class="selectedWildPokemon">
+            Selected Pokemon:<br/>
+            Name: {{selectedWildPokemon.name}}<br/>
+            Level: {{selectedWildPokemon.level}}<br/>
+            BaseHP: {{selectedWildPokemon.baseHP}}<br/>
+            MaxHP: {{selectedWildPokemon.maxHP}}
+        </div>
+
     </div>
 
-    <div class="selectedWildPokemon">
-        Selected Pokemon:<br/>
-        Name: {{selectedWildPokemon.name}}<br/>
-        Level: {{selectedWildPokemon.level}}<br/>
-        BaseHP: {{selectedWildPokemon.baseHP}}<br/>
-        MaxHP: {{selectedWildPokemon.maxHP}}
+    <div class="trainer-pokemon">
+        {{pokemon-details
+            bindedPokemon=selectedTrainerPokemon
+            bindedLevel=selectedTrainerPokemonLevel
+            pokemonList=model.pokemon
+            levelList=model.levels }}
     </div>
+
+
 
     {{render 'battle-attributes' this }}
 
@@ -74,6 +79,21 @@
             {{input type=inputType value=bindValue}}
         {{/if}}
     </label>
+</script>
+
+<script type="text/x-handlebars" id="components/pokemon-details">
+    <div class="pokemon-details">
+        {{view "select"
+            value=bindedPokemon
+            content=pokemonList
+            optionLabelPath="content.name" }}
+
+        Lv.
+        {{view "select"
+            value=bindedLevel
+            content=levelList
+            }}
+    </div>
 </script>
 
 <script type="text/x-handlebars" id="pokeball-list">

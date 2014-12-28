@@ -100,6 +100,25 @@ App.IndexController = Ember.Controller.extend({
 		});
 	}.observes('selectedLevel'),
 
+	selectedTrainerPokemonObserver: function() {
+		var selectedWildPokemon = this.get('selectedTrainerPokemon'),
+			hasBeenCaughtBefore = selectedWildPokemon.get('hasBeenCaughtBefore'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('selectedTrainerPokemon', selectedWildPokemon);
+		});
+
+	}.observes('selectedTrainerPokemon'),
+	selectedTrainerPokemonLevelObserver: function() {
+		var selectedTrainerPokemonLevel = this.get('selectedTrainerPokemonLevel') || 1,
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('selectedTrainerPokemonLevel', selectedTrainerPokemonLevel);
+		});
+	}.observes('selectedTrainerPokemonLevel'),
+
 	selectedWildPokemonHasBeenCaught: function() {
 
 		var hasBeenCaughtBefore = this.get('hasBeenCaughtBefore'),
@@ -194,9 +213,24 @@ App.Pokeball.reopenClass({
 			ultraball = this.create({id: 3,name: 'Ultra Ball',ballRate: 2}),
 			masterball = this.create({id: 4,name: 'Master Ball',ballRate: 255}),
 			safariball = this.create({id: 5,name: 'Safari Ball',ballRate: 1.5}),
-			levelball = this.create({
+			levelball = this.createWithMixins({
 				id: 6,
-				name: 'Level Ball'
+				name: 'Level Ball',
+				ballRate: function() {
+					var trainerPokemonLevel = this.get('selectedTrainerPokemonLevel') || 1,
+						wildPokemonLevel = this.get('selectedWildPokemon.level') || 1,
+						levelDifference = trainerPokemonLevel / wildPokemonLevel;
+
+					if (levelDifference >= 4) {
+						return 8;
+					} else if (levelDifference >= 2) {
+						return 4;
+					} else if (levelDifference > 1) {
+						return 2;
+					}
+
+					return 1;
+				}.property('selectedTrainerPokemonLevel', 'selectedWildPokemon.level')
 			}),
 			lureball = this.createWithMixins({
 				id: 7,
