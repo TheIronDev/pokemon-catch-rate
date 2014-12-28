@@ -24,24 +24,24 @@
                 prompt="Pokemon"
                 optionLabelPath="content.name" }}
 
+            Lv.
             {{view "select"
                 value=selectedLevel
                 content=model.levels
-                prompt="Level"
                 }}
 
+        </div>
+        <div>
             {{view "select"
                 value=currentStatus
                 content=model.status
                 optionLabelPath="content.name"
                 prompt="Status"
                 }}
-        </div>
-        <div>
-            Health:
-            {{input type="range" class="range-current-hp" style=currentHPRangeBackground name="range" min="1" max="100" value=currentHPPercent}}
 
-            ({{currentHPPercentString}})
+            {{input type="checkbox" checked=hasBeenCaughtBefore}}
+            HP:
+            {{input type="range" class="range-current-hp" style=currentHPRangeBackground name="range" min="1" max="100" value=currentHPPercent}}
         </div>
     </div>
 

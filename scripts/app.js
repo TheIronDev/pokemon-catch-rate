@@ -79,12 +79,15 @@ App.IndexController = Ember.Controller.extend({
 
 	}.observes('currentHPPercent'),
 	selectedPokemonObserver: function() {
-		var thePokemonToSet = this.get('selectedPokemon'),
+		var selectedPokemon = this.get('selectedPokemon'),
+			hasBeenCaughtBefore = selectedPokemon.get('hasBeenCaughtBefore'),
 			pokeballs = this.get('model.pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('pokemon', thePokemonToSet);
+			pokeball.set('pokemon', selectedPokemon);
 		});
+
+		this.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
 
 	}.observes('selectedPokemon'),
 	selectedLevelObserver: function() {
@@ -95,6 +98,17 @@ App.IndexController = Ember.Controller.extend({
 			pokemon.set('level', selectedLevel);
 		});
 	}.observes('selectedLevel'),
+
+	selectedPokemonHasBeenCaught: function() {
+
+		var hasBeenCaughtBefore = this.get('hasBeenCaughtBefore'),
+			selectedPokemon = this.get('selectedPokemon');
+
+		if (selectedPokemon) {
+			selectedPokemon.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
+		}
+
+	}.observes('hasBeenCaughtBefore'),
 
 	isDuskObserver: function() {
 		var isDusk = this.get('isDusk'),
@@ -197,9 +211,13 @@ App.Pokeball.reopenClass({
 			}),
 			sportball = this.create({id: 13,name: 'Sport Ball', ballRate: 1.5}),
 			premierball = this.create({id: 14,name: 'Premier Ball'}),
-			repeatball = this.create({
+			repeatball = this.createWithMixins({
 				id: 15,
-				name: 'Repeat Ball'
+				name: 'Repeat Ball',
+				ballRate: function() {
+					var hasBeenCaughtBefore = this.get('pokemon.hasBeenCaughtBefore');
+					return hasBeenCaughtBefore ? 3 : 1;
+				}.property('pokemon.hasBeenCaughtBefore')
 			}),
 			timerball = this.create({
 				id: 16,
@@ -233,7 +251,7 @@ App.Pokeball.reopenClass({
 			});
 
 		return [
-			pokeball, greatball, ultraball, safariball, masterball, levelball, lureball, moonball, friendball,
+			pokeball, greatball, ultraball, masterball, safariball, levelball, lureball, moonball, friendball,
 			loveball, heavyball, fastball, sportball, premierball, repeatball, timerball, nestball, netball, diveball,
 			luxuryball, healball, quickball, duskball
 		];
@@ -266,6 +284,7 @@ App.Status.reopenClass({
 App.Pokemon = DS.Model.extend({
 	name: DS.attr('string'),
 	baseHP: DS.attr('number'),
+	hasBeenCaughtBefore: false,
 	level: DS.attr('number', {
 		defaultValue: 1
 	}),
