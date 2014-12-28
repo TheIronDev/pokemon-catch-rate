@@ -156,21 +156,9 @@ App.Pokeball.reopenClass({
 
 		var pokeball = this.create({id: 1, name: 'PokeBall'}),
 			greatball = this.create({id: 2, name: 'Great Ball', ballRate: 1.5}),
-			ultraball = this.create({
-				id: 3,
-				name: 'Ultra Ball',
-				ballRate: 2
-			}),
-			safariball = this.create({
-				id: 4,
-				name: 'Safari Ball',
-				ballRate: 1.5
-			}),
-			masterball = this.create({
-				id: 5,
-				name: 'Master Ball',
-				ballRate: 255
-			}),
+			ultraball = this.create({id: 3,name: 'Ultra Ball',ballRate: 2}),
+			safariball = this.create({id: 4,name: 'Safari Ball',ballRate: 1.5}),
+			masterball = this.create({id: 5,name: 'Master Ball',ballRate: 255}),
 			levelball = this.create({
 				id: 6,
 				name: 'Level Ball'
@@ -183,10 +171,7 @@ App.Pokeball.reopenClass({
 				id: 8,
 				name: 'Moon Ball'
 			}),
-			friendball = this.create({
-				id: 9,
-				name: 'Friend Ball'
-			}),
+			friendball = this.create({id: 9,name: 'Friend Ball'}),
 			loveball = this.create({
 				id: 10,
 				name: 'Love Ball'
@@ -199,14 +184,8 @@ App.Pokeball.reopenClass({
 				id: 12,
 				name: 'Fast Ball'
 			}),
-			sportball = this.create({
-				id: 13,
-				name: 'Sport Ball'
-			}),
-			premierball = this.create({
-				id: 14,
-				name: 'Premier Ball'
-			}),
+			sportball = this.create({id: 13,name: 'Sport Ball', ballRate: 1.5}),
+			premierball = this.create({id: 14,name: 'Premier Ball'}),
 			repeatball = this.create({
 				id: 15,
 				name: 'Repeat Ball'
@@ -227,14 +206,8 @@ App.Pokeball.reopenClass({
 				id: 19,
 				name: 'Dive Ball'
 			}),
-			luxuryball = this.create({
-				id: 20,
-				name: 'Luxury Ball'
-			}),
-			healball = this.create({
-				id: 21,
-				name: 'Heal Ball'
-			}),
+			luxuryball = this.create({id: 20,name: 'Luxury Ball'}),
+			healball = this.create({id: 21,name: 'Heal Ball'}),
 			quickball = this.create({
 				id: 22,
 				name: 'Quick Ball'
@@ -246,14 +219,6 @@ App.Pokeball.reopenClass({
 					var isCave = this.get('isCave');
 					return isCave ? 3.5 : 1;
 				}.property('isCave')
-			}),
-			cherishball = this.create({
-				id: 24,
-				name: 'Cherish Ball'
-			}),
-			parkball  = this.create({
-				id: 25,
-				name: 'Park Ball'
 			});
 
 		return [
