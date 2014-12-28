@@ -60,8 +60,12 @@
 
 <script type="text/x-handlebars" id="battle-attributes">
     <div class="battle-attributes">
-        <label>Is Cave ?{{input type="checkbox" checked=isCave}}</label>
+        {{battle-attribute-checkbox labelText="Is Cave?" bindValue=isCave }}
     </div>
+</script>
+
+<script type="text/x-handlebars" id="components/battle-attribute-checkbox">
+    <label>{{labelText}} {{input type="checkbox" checked=bindValue}}</label>
 </script>
 
 <script type="text/x-handlebars" id="pokeball-list">
