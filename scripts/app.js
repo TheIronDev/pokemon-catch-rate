@@ -96,16 +96,22 @@ App.IndexController = Ember.Controller.extend({
 		});
 	}.observes('selectedLevel'),
 
-	isCaveObserver: function() {
-
-		var isCave = this.get('isCave'),
+	isDuskObserver: function() {
+		var isDusk = this.get('isDusk'),
 			pokeballs = this.get('model.pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('isCave', isCave);
+			pokeball.set('isDusk', isDusk);
 		});
+	}.observes('isDusk'),
+	isFishingObserver: function () {
+		var isFishing = this.get('isFishing'),
+			pokeballs = this.get('model.pokeballs');
 
-	}.observes('isCave')
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('isFishing', isFishing);
+		});
+	}.observes('isFishing')
 });
 
 // Components
@@ -123,7 +129,8 @@ App.Pokeball = Ember.Object.extend({
 	name: '',
 	ballRate: 1,
 	currentHPPercent: 100,
-	isCave: false,
+	isDusk: false,
+	isFishing: false,
 	catchRate: function() {
 
 		var pokemon = this.get('pokemon');
@@ -157,15 +164,19 @@ App.Pokeball.reopenClass({
 		var pokeball = this.create({id: 1, name: 'PokeBall'}),
 			greatball = this.create({id: 2, name: 'Great Ball', ballRate: 1.5}),
 			ultraball = this.create({id: 3,name: 'Ultra Ball',ballRate: 2}),
-			safariball = this.create({id: 4,name: 'Safari Ball',ballRate: 1.5}),
-			masterball = this.create({id: 5,name: 'Master Ball',ballRate: 255}),
+			masterball = this.create({id: 4,name: 'Master Ball',ballRate: 255}),
+			safariball = this.create({id: 5,name: 'Safari Ball',ballRate: 1.5}),
 			levelball = this.create({
 				id: 6,
 				name: 'Level Ball'
 			}),
-			lureball = this.create({
+			lureball = this.createWithMixins({
 				id: 7,
-				name: 'Lure Ball'
+				name: 'Lure Ball',
+				ballRate: function() {
+					var isFishing = this.get('isFishing');
+					return isFishing ? 3 : 1;
+				}.property('isFishing')
 			}),
 			moonball = this.create({
 				id: 8,
@@ -216,15 +227,15 @@ App.Pokeball.reopenClass({
 				id: 23,
 				name: 'Dusk Ball',
 				ballRate: function() {
-					var isCave = this.get('isCave');
-					return isCave ? 3.5 : 1;
-				}.property('isCave')
+					var isDusk = this.get('isDusk');
+					return isDusk ? 3.5 : 1;
+				}.property('isDusk')
 			});
 
 		return [
-			pokeball, greatball, ultraball, safariball, masterball, levelball, lureball, moonball, friendball, loveball,
-			heavyball, fastball, sportball, premierball, repeatball, timerball, nestball, netball, diveball,
-			luxuryball, healball, quickball, duskball, cherishball, parkball
+			pokeball, greatball, ultraball, safariball, masterball, levelball, lureball, moonball, friendball,
+			loveball, heavyball, fastball, sportball, premierball, repeatball, timerball, nestball, netball, diveball,
+			luxuryball, healball, quickball, duskball
 		];
 
 	}
