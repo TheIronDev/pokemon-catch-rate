@@ -79,18 +79,18 @@ App.IndexController = Ember.Controller.extend({
 		});
 
 	}.observes('currentHPPercent'),
-	selectedPokemonObserver: function() {
-		var selectedPokemon = this.get('selectedPokemon'),
-			hasBeenCaughtBefore = selectedPokemon.get('hasBeenCaughtBefore'),
+	selectedWildPokemonObserver: function() {
+		var selectedWildPokemon = this.get('selectedWildPokemon'),
+			hasBeenCaughtBefore = selectedWildPokemon.get('hasBeenCaughtBefore'),
 			pokeballs = this.get('model.pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('pokemon', selectedPokemon);
+			pokeball.set('selectedWildPokemon', selectedWildPokemon);
 		});
 
 		this.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
 
-	}.observes('selectedPokemon'),
+	}.observes('selectedWildPokemon'),
 	selectedLevelObserver: function() {
 		var selectedLevel = this.get('selectedLevel') || 1,
 			pokemonList = this.get('model.pokemon');
@@ -100,13 +100,13 @@ App.IndexController = Ember.Controller.extend({
 		});
 	}.observes('selectedLevel'),
 
-	selectedPokemonHasBeenCaught: function() {
+	selectedWildPokemonHasBeenCaught: function() {
 
 		var hasBeenCaughtBefore = this.get('hasBeenCaughtBefore'),
-			selectedPokemon = this.get('selectedPokemon');
+			selectedWildPokemon = this.get('selectedWildPokemon');
 
-		if (selectedPokemon) {
-			selectedPokemon.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
+		if (selectedWildPokemon) {
+			selectedWildPokemon.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
 		}
 
 	}.observes('hasBeenCaughtBefore'),
@@ -158,15 +158,16 @@ App.Pokeball = Ember.Object.extend({
 	battleTurnsCount: 1,
 	catchRate: function() {
 
-		var pokemon = this.get('pokemon');
+		var pokemon = this.get('selectedWildPokemon');
 
 		if (!pokemon) {
 			return '';
 		}
 
 		var hpMax = pokemon.get('maxHP'),
-			hpPercent = parseInt(this.get('currentHPPercent'), 10),
-			hpCurrent = ((hpPercent === 1) ? 1 : hpMax * hpPercent / 100),
+			hpCurrentPercent = parseInt(this.get('currentHPPercent'), 10),
+			hpPercent = (hpMax * hpCurrentPercent / 100),
+			hpCurrent = ((hpPercent < 1) ? 1 : hpPercent),
 			currentStatus = this.get('currentStatus'),
 			statusRate = (currentStatus && currentStatus.get('value')) || 1,
 			pokemonCatchRate = pokemon.get('catchRate'),
@@ -183,7 +184,7 @@ App.Pokeball = Ember.Object.extend({
 		catchProbability = (((65536 / (255/shakeRate)^0.1875) / 65536));
 
 		return (catchProbability * 100).toFixed(2);
-	}.property('ballRate', 'currentHPPercent', 'currentStatus', 'pokemon', 'pokemon.maxHP', 'pokemon.level')
+	}.property('ballRate', 'currentHPPercent', 'currentStatus', 'selectedWildPokemon', 'selectedWildPokemon.maxHP')
 });
 App.Pokeball.reopenClass({
 	all: function () {
@@ -228,9 +229,9 @@ App.Pokeball.reopenClass({
 				id: 15,
 				name: 'Repeat Ball',
 				ballRate: function() {
-					var hasBeenCaughtBefore = this.get('pokemon.hasBeenCaughtBefore');
+					var hasBeenCaughtBefore = this.get('selectedWildPokemon.hasBeenCaughtBefore');
 					return hasBeenCaughtBefore ? 3 : 1;
-				}.property('pokemon.hasBeenCaughtBefore')
+				}.property('selectedWildPokemon.hasBeenCaughtBefore')
 			}),
 			timerball = this.createWithMixins({
 				id: 16,
@@ -262,7 +263,7 @@ App.Pokeball.reopenClass({
 				name: 'Quick Ball',
 				ballRate: function() {
 
-					var battleTurnsCount = this.get('battleTurnsCount');
+					var battleTurnsCount = parseInt(this.get('battleTurnsCount'), 10);
 					return (battleTurnsCount === 1) ? 4 : 1;
 				}.property('battleTurnsCount')
 			}),

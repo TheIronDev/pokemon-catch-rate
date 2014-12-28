@@ -19,7 +19,7 @@
     <div class="battle-details">
         <div>
             {{view "select"
-                value=selectedPokemon
+                value=selectedWildPokemon
                 content=model.pokemon
                 optionLabelPath="content.name" }}
 
@@ -44,12 +44,12 @@
         </div>
     </div>
 
-    <div class="selectedPokemon">
+    <div class="selectedWildPokemon">
         Selected Pokemon:<br/>
-        Name: {{selectedPokemon.name}}<br/>
-        Level: {{selectedPokemon.level}}<br/>
-        BaseHP: {{selectedPokemon.baseHP}}<br/>
-        MaxHP: {{selectedPokemon.maxHP}}
+        Name: {{selectedWildPokemon.name}}<br/>
+        Level: {{selectedWildPokemon.level}}<br/>
+        BaseHP: {{selectedWildPokemon.baseHP}}<br/>
+        MaxHP: {{selectedWildPokemon.maxHP}}
     </div>
 
     {{render 'battle-attributes' this }}
