@@ -21,7 +21,6 @@
             {{view "select"
                 value=selectedPokemon
                 content=model.pokemon
-                prompt="Pokemon"
                 optionLabelPath="content.name" }}
 
             Lv.
@@ -60,13 +59,21 @@
 
 <script type="text/x-handlebars" id="battle-attributes">
     <div class="battle-attributes">
-        {{battle-attribute-checkbox labelText="Is Dusk? (cave / night)" bindValue=isDusk }}
-        {{battle-attribute-checkbox labelText="Is Fishing?" bindValue=isFishing }}
+        {{battle-attribute-checkbox isCheckbox=true labelText="Is Dusk? (cave / night)" bindValue=isDusk }}
+        {{battle-attribute-checkbox isCheckbox=true labelText="Is Fishing?" bindValue=isFishing }}
+        {{battle-attribute-checkbox inputType="number" labelText="Number of turns" bindValue=battleTurnsCount }}
     </div>
 </script>
 
 <script type="text/x-handlebars" id="components/battle-attribute-checkbox">
-    <label>{{labelText}} {{input type="checkbox" checked=bindValue}}</label>
+    <label>
+        {{labelText}}
+        {{#if isCheckbox}}
+            {{input type="checkbox" checked=bindValue}}
+        {{else}}
+            {{input type=inputType value=bindValue}}
+        {{/if}}
+    </label>
 </script>
 
 <script type="text/x-handlebars" id="pokeball-list">

@@ -44,6 +44,7 @@ App.IndexRoute = Ember.Route.extend({
  */
 App.IndexController = Ember.Controller.extend({
 	currentHPPercent: 100,
+	battleTurnsCount: 1,
 	currentHPPercentString: function() {
 		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
 		return (currentHPPercent === 1 ? 1 : currentHPPercent + '%');
@@ -125,7 +126,16 @@ App.IndexController = Ember.Controller.extend({
 		pokeballs.forEach( function( pokeball ) {
 			pokeball.set('isFishing', isFishing);
 		});
-	}.observes('isFishing')
+	}.observes('isFishing'),
+
+	battleTurnsCountObserver: function() {
+		var battleTurnsCount = this.get('battleTurnsCount'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('battleTurnsCount', battleTurnsCount);
+		});
+	}.observes('battleTurnsCount')
 });
 
 // Components
@@ -145,6 +155,7 @@ App.Pokeball = Ember.Object.extend({
 	currentHPPercent: 100,
 	isDusk: false,
 	isFishing: false,
+	battleTurnsCount: 1,
 	catchRate: function() {
 
 		var pokemon = this.get('pokemon');
@@ -166,7 +177,9 @@ App.Pokeball = Ember.Object.extend({
 			shakeRate = (numerator/denominator) * statusRate,
 			catchProbability;
 
-		shakeRate = shakeRate < 255 ? shakeRate : 255;
+		if (shakeRate >= 255) {
+			return 100;
+		}
 		catchProbability = (((65536 / (255/shakeRate)^0.1875) / 65536));
 
 		return (catchProbability * 100).toFixed(2);
@@ -219,9 +232,16 @@ App.Pokeball.reopenClass({
 					return hasBeenCaughtBefore ? 3 : 1;
 				}.property('pokemon.hasBeenCaughtBefore')
 			}),
-			timerball = this.create({
+			timerball = this.createWithMixins({
 				id: 16,
-				name: 'Timer Ball'
+				name: 'Timer Ball',
+				ballRate: function() {
+
+					var battleTurnsCount = this.get('battleTurnsCount'),
+						newRate = (1 + (battleTurnsCount * 1229/4096) );
+
+					return newRate < 4 ? newRate : 4;
+				}.property('battleTurnsCount')
 			}),
 			nestball = this.create({
 				id: 17,
@@ -237,9 +257,14 @@ App.Pokeball.reopenClass({
 			}),
 			luxuryball = this.create({id: 20,name: 'Luxury Ball'}),
 			healball = this.create({id: 21,name: 'Heal Ball'}),
-			quickball = this.create({
+			quickball = this.createWithMixins({
 				id: 22,
-				name: 'Quick Ball'
+				name: 'Quick Ball',
+				ballRate: function() {
+
+					var battleTurnsCount = this.get('battleTurnsCount');
+					return (battleTurnsCount === 1) ? 4 : 1;
+				}.property('battleTurnsCount')
 			}),
 			duskball = this.createWithMixins({
 				id: 23,
