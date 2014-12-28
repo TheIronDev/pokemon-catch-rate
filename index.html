@@ -53,14 +53,14 @@
         MaxHP: {{selectedPokemon.maxHP}}
     </div>
 
-    {{render 'battle-attributes' model.battleAttributes}}
+    {{render 'battle-attributes' this }}
 
     {{render 'pokeball-list' model.pokeballs}}
 </script>
 
 <script type="text/x-handlebars" id="battle-attributes">
     <div class="battle-attributes">
-        <label>Is Cave {{isCave}}</label>
+        <label>Is Cave ?{{input type="checkbox" checked=isCave}}</label>
     </div>
 </script>
 
