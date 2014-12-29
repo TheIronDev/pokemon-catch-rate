@@ -271,9 +271,13 @@ App.Pokeball.reopenClass({
 					return isFishing ? 3 : 1;
 				}.property('isFishing')
 			}),
-			moonball = this.create({
+			moonball = this.createWithMixins({
 				id: 8,
-				name: 'Moon Ball'
+				name: 'Moon Ball',
+				ballRate: function() {
+					var isMoonstone = this.get('selectedWildPokemon.moonstone');
+					return (isMoonstone) ? 4 : 1;
+				}.property('selectedWildPokemon.moonstone')
 			}),
 			friendball = this.create({id: 9,name: 'Friend Ball'}),
 			loveball = this.createWithMixins({
