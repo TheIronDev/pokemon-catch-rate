@@ -200,6 +200,7 @@ App.Pokeball = Ember.Object.extend({
 	name: '',
 	ballRate: 1,
 	currentHPPercent: 100,
+	pokemonWeightModifier: 0,
 	isDusk: false,
 	isFishing: false,
 	isSurfing: false,
@@ -219,7 +220,7 @@ App.Pokeball = Ember.Object.extend({
 			hpCurrent = ((hpPercent < 1) ? 1 : hpPercent),
 			currentStatus = this.get('currentStatus'),
 			statusRate = (currentStatus && currentStatus.get('value')) || 1,
-			pokemonCatchRate = pokemon.get('catchRate'),
+			pokemonCatchRate = pokemon.get('catchRate') + this.get('pokemonWeightModifier'),
 			ballRate = this.get('ballRate');
 
 		var numerator = ((3 * hpMax - 2 * hpCurrent) * pokemonCatchRate * ballRate),
@@ -292,13 +293,30 @@ App.Pokeball.reopenClass({
 
 				}.property('selectedTrainerPokemon', 'selectedWildPokemon', 'selectedTrainerPokemonGender', 'selectedWildPokemonGender')
 			}),
-			heavyball = this.create({
+			heavyball = this.createWithMixins({
 				id: 11,
-				name: 'Heavy Ball'
+				name: 'Heavy Ball',
+				pokemonWeightModifier: function() {
+					var weight = this.get('selectedWildPokemon.weight');
+
+					if (weight > 903) {
+						return 40;
+					} else if (weight >  677.3) {
+						return 30;
+					} else if (weight > 451.1) {
+						return 20;
+					}
+
+					return -20;
+				}.property('selectedWildPokemon.weight')
 			}),
-			fastball = this.create({
+			fastball = this.createWithMixins({
 				id: 12,
-				name: 'Fast Ball'
+				name: 'Fast Ball',
+				ballRate: function() {
+					var baseSpeed = this.get('selectedWildPokemon.baseSpeed');
+					return (baseSpeed > 100) ? 4 : 1;
+				}.property('selectedWildPokemon.baseSpeed')
 			}),
 			sportball = this.create({id: 13,name: 'Sport Ball', ballRate: 1.5}),
 			premierball = this.create({id: 14,name: 'Premier Ball'}),
