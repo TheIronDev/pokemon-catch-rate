@@ -303,9 +303,15 @@ App.Pokeball.reopenClass({
 					return newRate < 4 ? newRate : 4;
 				}.property('battleTurnsCount')
 			}),
-			nestball = this.create({
+			nestball = this.createWithMixins({
 				id: 17,
-				name: 'Nest Ball'
+				name: 'Nest Ball',
+				ballRate: function() {
+					var selectedWildPokemonLevel = this.get('selectedWildPokemon.level'),
+						newRate = ((41 - selectedWildPokemonLevel) / 10);
+
+					return newRate > 1 ? newRate : 1;
+				}.property('selectedWildPokemon.level')
 			}),
 			netball = this.create({
 				id: 18,
