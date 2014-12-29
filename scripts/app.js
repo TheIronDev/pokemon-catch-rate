@@ -45,6 +45,7 @@ App.IndexRoute = Ember.Route.extend({
 App.IndexController = Ember.Controller.extend({
 	currentHPPercent: 100,
 	battleTurnsCount: 1,
+	genderList: ['♂', '♀'],
 	currentHPPercentString: function() {
 		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
 		return (currentHPPercent === 1 ? 1 : currentHPPercent + '%');
@@ -91,14 +92,14 @@ App.IndexController = Ember.Controller.extend({
 		this.set('hasBeenCaughtBefore', hasBeenCaughtBefore);
 
 	}.observes('selectedWildPokemon'),
-	selectedLevelObserver: function() {
-		var selectedLevel = this.get('selectedLevel') || 1,
+	selectedWildPokemonLevelObserver: function() {
+		var selectedWildPokemonLevel = this.get('selectedWildPokemonLevel') || 1,
 			pokemonList = this.get('model.pokemon');
 
 		pokemonList.forEach( function( pokemon ) {
-			pokemon.set('level', selectedLevel);
+			pokemon.set('level', selectedWildPokemonLevel);
 		});
-	}.observes('selectedLevel'),
+	}.observes('selectedWildPokemonLevel'),
 
 	selectedTrainerPokemonObserver: function() {
 		var selectedWildPokemon = this.get('selectedTrainerPokemon'),
@@ -146,6 +147,17 @@ App.IndexController = Ember.Controller.extend({
 			pokeball.set('isFishing', isFishing);
 		});
 	}.observes('isFishing'),
+
+	pokemonGenderObserver: function(controller, changedAttribute) {
+		// TODO: refactor the observers to use the changedAttributes.
+		var selectedGenderDropdownValue = this.get(changedAttribute),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set(changedAttribute, selectedGenderDropdownValue);
+		});
+
+	}.observes('selectedWildPokemonGender', 'selectedTrainerPokemonGender'),
 
 	battleTurnsCountObserver: function() {
 		var battleTurnsCount = this.get('battleTurnsCount'),
@@ -245,9 +257,22 @@ App.Pokeball.reopenClass({
 				name: 'Moon Ball'
 			}),
 			friendball = this.create({id: 9,name: 'Friend Ball'}),
-			loveball = this.create({
+			loveball = this.createWithMixins({
 				id: 10,
-				name: 'Love Ball'
+				name: 'Love Ball',
+				ballRate: function() {
+					var trainerPokemonId = this.get('selectedTrainerPokemon.id'),
+						wildPokemonId = this.get('selectedWildPokemon.id'),
+						trainerPokemonGender = this.get('selectedTrainerPokemonGender'),
+						wildPokemonGender = this.get('selectedWildPokemonGender');
+
+					if (trainerPokemonId === wildPokemonId &&
+						trainerPokemonGender === wildPokemonGender) {
+						return 8;
+					}
+					return 1;
+
+				}.property('selectedTrainerPokemon', 'selectedWildPokemon', 'selectedTrainerPokemonGender', 'selectedWildPokemonGender')
 			}),
 			heavyball = this.create({
 				id: 11,
