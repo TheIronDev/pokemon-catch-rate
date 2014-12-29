@@ -147,6 +147,22 @@ App.IndexController = Ember.Controller.extend({
 			pokeball.set('isFishing', isFishing);
 		});
 	}.observes('isFishing'),
+	isSurfingObserver: function () {
+		var isSurfing = this.get('isSurfing'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('isSurfing', isSurfing);
+		});
+	}.observes('isSurfing'),
+	isUnderwaterObserver: function () {
+		var isUnderwater = this.get('isUnderwater'),
+			pokeballs = this.get('model.pokeballs');
+
+		pokeballs.forEach( function( pokeball ) {
+			pokeball.set('isUnderwater', isUnderwater);
+		});
+	}.observes('isUnderwater'),
 
 	pokemonGenderObserver: function(controller, changedAttribute) {
 		// TODO: refactor the observers to use the changedAttributes.
@@ -186,6 +202,8 @@ App.Pokeball = Ember.Object.extend({
 	currentHPPercent: 100,
 	isDusk: false,
 	isFishing: false,
+	isSurfing: false,
+	isUnderwater: false,
 	battleTurnsCount: 1,
 	catchRate: function() {
 
@@ -317,9 +335,21 @@ App.Pokeball.reopenClass({
 				id: 18,
 				name: 'Net Ball'
 			}),
-			diveball = this.create({
+			diveball = this.createWithMixins({
 				id: 19,
-				name: 'Dive Ball'
+				name: 'Dive Ball',
+				ballRate: function() {
+					var isFishing = this.get('isFishing'),
+						isSurfing = this.get('isSurfing'),
+						isUnderwater = this.get('isUnderwater');
+
+					if (isFishing || isSurfing || isUnderwater) {
+						return 3.5;
+					}
+
+					return 1;
+
+				}.property('isFishing', 'isSurfing', 'isUnderwater')
 			}),
 			luxuryball = this.create({id: 20,name: 'Luxury Ball'}),
 			healball = this.create({id: 21,name: 'Heal Ball'}),
