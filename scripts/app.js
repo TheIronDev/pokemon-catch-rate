@@ -1,5 +1,6 @@
 App = Ember.Application.create();
 App.ApplicationAdapter = DS.RESTAdapter.extend({});
+var dataNamespace = (window.location.pathname + 'data').substring(1) || 'data';
 
 // We are reopening the TextSupport class to add styling
 Ember.TextSupport.reopen({
@@ -491,7 +492,7 @@ App.Pokemon = DS.Model.extend({
 });
 App.PokemonAdapter = DS.RESTAdapter.extend({
 	suffix: '.json',
-	namespace: 'data',
+	namespace: dataNamespace,
 
 	pathForType: function(type) {
 		return this._super(type) + this.get('suffix');
