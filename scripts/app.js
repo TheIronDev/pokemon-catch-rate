@@ -331,9 +331,17 @@ App.Pokeball.reopenClass({
 					return newRate > 1 ? newRate : 1;
 				}.property('selectedWildPokemon.level')
 			}),
-			netball = this.create({
+			netball = this.createWithMixins({
 				id: 18,
-				name: 'Net Ball'
+				name: 'Net Ball',
+				ballRate: function() {
+					var selectedWildPokemonTypes = this.get('selectedWildPokemon.types');
+
+					if (selectedWildPokemonTypes.contains('water') || selectedWildPokemonTypes.contains('bug')) {
+						return 3;
+					}
+					return 1;
+				}.property('selectedWildPokemon.types')
 			}),
 			diveball = this.createWithMixins({
 				id: 19,
@@ -405,6 +413,10 @@ App.Status.reopenClass({
 App.Pokemon = DS.Model.extend({
 	name: DS.attr('string'),
 	baseHP: DS.attr('number'),
+	baseSpeed: DS.attr('number'),
+	weight: DS.attr('number'),
+	types: DS.attr(),
+	moonstone: DS.attr('boolean'),
 	hasBeenCaughtBefore: false,
 	level: DS.attr('number', {
 		defaultValue: 1
@@ -424,38 +436,7 @@ App.Pokemon = DS.Model.extend({
 	}.property('baseHP', 'level')
 });
 App.Pokemon.reopenClass({
-	FIXTURES : [
-		{
-			id: 1,
-			name: 'Bulbasaur',
-			catchRate: 45,
-			baseHP: 45
-		},
-		{
-			id: 2,
-			name: 'Ivysaur',
-			catchRate: 45,
-			baseHP: 60
-		},
-		{
-			id: 3,
-			name: 'Venasaur',
-			catchRate: 45,
-			baseHP: 80
-		},
-		{
-			id: 19,
-			name: 'Rattata',
-			catchRate: 255,
-			baseHP: 30
-		},
-		{
-			id: 150,
-			name: 'Mewtwo',
-			catchRate: 3,
-			baseHP: 106
-		}
-	]
+	FIXTURES : [{"id":1,"name":"Bulbasaur","catchRate":45,"weight":15.2,"moonstone":false,"baseHP":45,"baseSpeed":45,"types":["grass","poison"]},{"id":2,"name":"Ivysaur","catchRate":45,"weight":28.7,"moonstone":false,"baseHP":60,"baseSpeed":60,"types":["grass","poison"]},{"id":3,"name":"Venusaur","catchRate":45,"weight":220.5,"moonstone":false,"baseHP":80,"baseSpeed":80,"types":["grass","poison"]},{"id":4,"name":"Charmander","catchRate":45,"weight":18.7,"moonstone":false,"baseHP":39,"baseSpeed":65,"types":["fire"]}]
 });
 
 // Globals are wrong, but I felt bad defining this giant array within the IndexRoute.

@@ -33,3 +33,7 @@ node_modules
 
 # IDE(a)
 .idea/
+
+# Project
+serebii_script.js
+raw_pokemon_data.json
