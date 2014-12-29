@@ -1,5 +1,5 @@
 App = Ember.Application.create();
-App.ApplicationAdapter = DS.FixtureAdapter;
+App.ApplicationAdapter = DS.RESTAdapter.extend({});
 
 // We are reopening the TextSupport class to add styling
 Ember.TextSupport.reopen({
@@ -14,7 +14,6 @@ App.Router.map(function() {
 // The IndexRoute maps to / or /#index
 App.IndexRoute = Ember.Route.extend({
 	model: function() {
-
 		/**
 		 * The original implementation used DS.FixtureAdapter to fetch the data. This was not the correct approach,
 		 * as the DS.FixtureAdapter was meant to represent what would/should be a persistance record.
@@ -32,6 +31,17 @@ App.IndexRoute = Ember.Route.extend({
 			status: App.Status.all(),
 			levels: App.Levels
 		});
+	},
+	actions: {
+		loading: function(transition, originRoute) {
+
+			// TODO: resolve the loading issue, the app is super slow with the pokemon promise
+			//displayLoadingSpinner();
+
+			// Return true to bubble this event to `FooRoute`
+			// or `ApplicationRoute`.
+			return true;
+		}
 	}
 });
 
@@ -457,8 +467,13 @@ App.Pokemon = DS.Model.extend({
 		return ~~(numerator / denominator + 10);
 	}.property('baseHP', 'level')
 });
-App.Pokemon.reopenClass({
-	FIXTURES : [{"id":1,"name":"Bulbasaur","catchRate":45,"weight":15.2,"moonstone":false,"baseHP":45,"baseSpeed":45,"types":["grass","poison"]},{"id":2,"name":"Ivysaur","catchRate":45,"weight":28.7,"moonstone":false,"baseHP":60,"baseSpeed":60,"types":["grass","poison"]},{"id":3,"name":"Venusaur","catchRate":45,"weight":220.5,"moonstone":false,"baseHP":80,"baseSpeed":80,"types":["grass","poison"]},{"id":4,"name":"Charmander","catchRate":45,"weight":18.7,"moonstone":false,"baseHP":39,"baseSpeed":65,"types":["fire"]}]
+App.PokemonAdapter = DS.RESTAdapter.extend({
+	suffix: '.json',
+	namespace: 'data/',
+
+	pathForType: function(type) {
+		return this._super(type) + this.get('suffix');
+	}
 });
 
 // Globals are wrong, but I felt bad defining this giant array within the IndexRoute.
