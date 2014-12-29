@@ -491,7 +491,7 @@ App.Pokemon = DS.Model.extend({
 });
 App.PokemonAdapter = DS.RESTAdapter.extend({
 	suffix: '.json',
-	namespace: 'data/',
+	namespace: 'data',
 
 	pathForType: function(type) {
 		return this._super(type) + this.get('suffix');
