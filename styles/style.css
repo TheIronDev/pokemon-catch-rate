@@ -6,6 +6,10 @@ html {
     background: #efefef;
 }
 
+h1 {
+    text-align: center;
+}
+
 .container {
     border: 1px solid #fff;
     margin: 0 auto;
@@ -39,8 +43,14 @@ html {
 }
 
 .pokeball-list {
+    height: 0px;
     padding: 0;
+    overflow: hidden;
     text-align: center;
+    transition: all 1.5s ease;
+}
+.pokeball-list.has-loaded-data {
+    height: 310px;
 }
 
 .pokeball-list .pokeball {

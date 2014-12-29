@@ -7,7 +7,7 @@
 </head>
 <body>
 <script type="text/x-handlebars">
-    <h2>Pokemon Catch Rate</h2>
+    <h1>Pokemon Catch Rate</h1>
 
     <div class="container">
         {{outlet}}
@@ -49,7 +49,7 @@
 
     </div>
 
-    <div class="trainer-pokemon">
+    <div class="trainer-pokemon" >
         {{pokemon-details
             bindedPokemon=selectedTrainerPokemon
             bindedLevel=selectedTrainerPokemonLevel
@@ -61,7 +61,7 @@
 
     {{render 'battle-attributes' this }}
 
-    {{render 'pokeball-list' model.pokeballs}}
+    {{partial 'pokeball-list' }}
 </script>
 
 <script type="text/x-handlebars" id="battle-attributes">
@@ -87,10 +87,16 @@
 
 <script type="text/x-handlebars" id="components/pokemon-details">
     <div class="pokemon-details">
-        {{view "select"
-            value=bindedPokemon
-            content=pokemonList
-            optionLabelPath="content.name" }}
+
+        {{#if pokemonList }}
+            {{view "select"
+                value=bindedPokemon
+                content=pokemonList
+                optionLabelPath="content.name" }}
+        {{else}}
+            {{view "select"
+                prompt="Loading..." }}
+        {{/if}}
 
         {{view "select"
             value=bindedGender
@@ -105,14 +111,23 @@
 </script>
 
 <script type="text/x-handlebars" id="pokeball-list">
-    <ul class="pokeball-list">
-        {{#each pokeball in model}}
+    <ul {{bind-attr class=":pokeball-list hasLoadedData"}}>
+        {{#each pokeball in model.pokeballs}}
             <li class="pokeball">
                 {{pokeball.name}}<br/>
                 {{pokeball.catchRate}}%
             </li>
         {{/each}}
     </ul>
+</script>
+
+<script type="text/x-handlebars" data-template-name="loading">
+    <div class="loading-pane">
+        <div class="loading-message">
+            Loading Pokemon Data
+            <div class="spinner"></div>
+        </div>
+    </div>
 </script>
 
 <script src="scripts/libs/jquery-1.10.2.js"></script>

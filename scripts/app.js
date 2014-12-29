@@ -25,12 +25,12 @@ App.IndexRoute = Ember.Route.extend({
 		 * "Once I have fetched all of these promises, return a hash of everything". Once we remove the this.store,
 		 * we will no longer need RSVP.hash, but its useful to know about.
 		 */
-		return Ember.RSVP.hash ({
+		return {
 			pokeballs: App.Pokeball.all(),
 			pokemon: store.find('pokemon'),
 			status: App.Status.all(),
 			levels: App.Levels
-		});
+		};
 	},
 	actions: {
 		loading: function(transition, originRoute) {
@@ -56,6 +56,7 @@ App.IndexController = Ember.Controller.extend({
 	currentHPPercent: 100,
 	battleTurnsCount: 1,
 	genderList: ['♂', '♀'],
+	hasLoadedData: false,
 	currentHPPercentString: function() {
 		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
 		return (currentHPPercent === 1 ? 1 : currentHPPercent + '%');
@@ -73,6 +74,27 @@ App.IndexController = Ember.Controller.extend({
 
 		return 'background: linear-gradient(to right, '+ color +' 0%, '+ color +' '+currentHPPercent+'%, transparent ' + currentHPPercentEdge + '%, transparent 100%);';
 	}.property('currentHPPercent'),
+	pokemonListObserver: function() {
+		var pokemon = this.get('model.pokemon'),
+			pokemonLength = pokemon.get('length'),
+			self = this,
+			defaultPokemon;
+
+		/**
+		 * We are listening for the pokemon:change event to select the default wild/trainers.
+		 *
+		 * I have a strong hunch this is going against the usual Ember workflow,
+		 * especially since I moved away from RSVP.Hash (promise approach).
+		 */
+		if(pokemon && pokemonLength) {
+			defaultPokemon = pokemon.get('content').get('content')[0];
+			this.set('selectedWildPokemon', defaultPokemon);
+			this.set('selectedTrainerPokemon', defaultPokemon);
+			setTimeout(function() {
+				self.set('hasLoadedData', true);
+			},0);
+		}
+	}.observes('model.pokemon.length'),
 	currentStatusObserver: function() {
 		var currentStatus = this.get('currentStatus'),
 			pokeballs = this.get('model.pokeballs');
