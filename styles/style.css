@@ -6,16 +6,91 @@ html {
     background: #efefef;
 }
 
-h1 {
-    text-align: center;
+h1 {text-align: center;}
+
+@-webkit-keyframes loaderSpins {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+
+@keyframes loaderSpins {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
 }
 
 .container {
     border: 1px solid #fff;
     margin: 0 auto;
-    max-width: 500px;
+    max-width: 600px;
+    width: 100%;
+
+    position: relative;
+}
+
+.loading-pane {
+    height: 15em;
+    width: 100%;
+    display: table;
+}
+
+.loading-message {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
     width: 100%;
 }
+
+.spinner-wrapper {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
+
+.spinner {
+    height: 15em;
+    width: 15em;
+    margin: 0 auto;
+
+    border-radius: 50%;
+    opacity: 0.5;
+
+    background: #ff4747; /* Old browsers */
+    background: -moz-linear-gradient(top,  #ff4747 0%, #ff6060 46%, #000000 47%, #000000 54%, #ffffff 55%, #ffffff 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ff4747), color-stop(46%,#ff6060), color-stop(47%,#000000), color-stop(54%,#000000), color-stop(55%,#ffffff), color-stop(100%,#ffffff)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top,  #ff4747 0%,#ff6060 46%,#000000 47%,#000000 54%,#ffffff 55%,#ffffff 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top,  #ff4747 0%,#ff6060 46%,#000000 47%,#000000 54%,#ffffff 55%,#ffffff 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top,  #ff4747 0%,#ff6060 46%,#000000 47%,#000000 54%,#ffffff 55%,#ffffff 100%); /* IE10+ */
+    background: linear-gradient(to bottom,  #ff4747 0%,#ff6060 46%,#000000 47%,#000000 54%,#ffffff 55%,#ffffff 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff4747', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
+
+    -webkit-animation: loaderSpins 1s linear infinite;
+    animation: loaderSpins 1s linear infinite;
+}
+
+.spinner:after {
+    content: ' ';
+
+
+    height: 3em;
+    width: 3em;
+    border-radius: 50%;
+
+    position: absolute;
+    top: 6em;
+    left: 6em;
+
+    background: #ffffff; /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover,  #ffffff 0%, #ffffff 48%, #000000 49%, #000000 49%); /* FF3.6+ */
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#ffffff), color-stop(48%,#ffffff), color-stop(49%,#000000), color-stop(49%,#000000)); /* Chrome,Safari4+ */
+    background: -webkit-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffffff 48%,#000000 49%,#000000 49%); /* Chrome10+,Safari5.1+ */
+    background: -o-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffffff 48%,#000000 49%,#000000 49%); /* Opera 12+ */
+    background: -ms-radial-gradient(center, ellipse cover,  #ffffff 0%,#ffffff 48%,#000000 49%,#000000 49%); /* IE10+ */
+    background: radial-gradient(ellipse at center,  #ffffff 0%,#ffffff 48%,#000000 49%,#000000 49%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+
+}
+
 
 .wild-pokemon {
     margin-left: 35%;
@@ -43,19 +118,55 @@ h1 {
 }
 
 .pokeball-list {
-    height: 0px;
+    margin: 0;
     padding: 0;
     overflow: hidden;
     text-align: center;
-    transition: all 1.5s ease;
-}
-.pokeball-list.has-loaded-data {
-    height: 310px;
+    transition: all .5s ease;
 }
 
 .pokeball-list .pokeball {
     display: inline-block;
-    padding: 0.5em;
+    padding: 5px;
     vertical-align: top;
-    width: 24%;
 }
+.pokeball-list .pokeball .pokeball-name {
+    font-size: 0.8em;
+}
+
+.pokeball-icon {
+    background: url(/images/pokeballs.png) no-repeat;
+    height: 40px;
+    width: 42px;
+    display: block;
+    background-size: 15em;
+    margin: 0 auto;
+}
+
+.pokeball-icon-1 {background-position: -0 0;}
+.pokeball-icon-2 {background-position: -50px 0;}
+.pokeball-icon-3 {background-position: -98px 0;}
+.pokeball-icon-4 {background-position: -150px 0;}
+.pokeball-icon-5 {background-position: -198px 0;}
+
+.pokeball-icon-6 {background-position: 0 -50px;}
+.pokeball-icon-7 {background-position: -50px -50px;}
+.pokeball-icon-8 {background-position: -98px -50px;}
+.pokeball-icon-9 {background-position: -150px -50px;}
+.pokeball-icon-10 {background-position: -198px -50px;}
+
+.pokeball-icon-11 {background-position: 0 -99px;}
+.pokeball-icon-12 {background-position: -50px -99px;}
+.pokeball-icon-13 {background-position: -98px -99px;}
+.pokeball-icon-14 {background-position: -150px -99px;}
+.pokeball-icon-15 {background-position: -198px -99px;}
+
+.pokeball-icon-16 {background-position: 0 -148px;}
+.pokeball-icon-17 {background-position: -50px -148px;}
+.pokeball-icon-18 {background-position: -98px -148px;}
+.pokeball-icon-19 {background-position: -150px -148px;}
+.pokeball-icon-20 {background-position: -198px -148px;}
+
+.pokeball-icon-21 {background-position: 0 -198px}
+.pokeball-icon-22 {background-position: -50px -198px}
+.pokeball-icon-23 {background-position: -98px -198px}

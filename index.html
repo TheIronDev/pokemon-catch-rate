@@ -111,22 +111,27 @@
 </script>
 
 <script type="text/x-handlebars" id="pokeball-list">
-    <ul {{bind-attr class=":pokeball-list hasLoadedData"}}>
+    <ul class="pokeball-list">
         {{#each pokeball in model.pokeballs}}
-            <li class="pokeball">
-                {{pokeball.name}}<br/>
-                {{pokeball.catchRate}}%
-            </li>
+            {{render "pokeball" pokeball}}
         {{/each}}
     </ul>
+</script>
+
+<script type="text/x-handlebars" id="pokeball">
+    <i {{bind-attr class="spriteClass"}} />
+    <div class="pokeball-name">{{name}}</div>
+    {{catchRate}}%
 </script>
 
 <script type="text/x-handlebars" data-template-name="loading">
     <div class="loading-pane">
         <div class="loading-message">
-            Loading Pokemon Data
-            <div class="spinner"></div>
+            Loading Pokemon Data...
         </div>
+    </div>
+    <div class="spinner-wrapper">
+        <div class="spinner"></div>
     </div>
 </script>
 
