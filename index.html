@@ -62,22 +62,23 @@
 
 <script type="text/x-handlebars" id="battle-attributes">
     <div class="battle-attributes">
-        {{battle-attribute-checkbox isCheckbox=true labelText="Is Dusk? (cave / night)" bindValue=isDusk }}
-        {{battle-attribute-checkbox isCheckbox=true labelText="Is Fishing?" bindValue=isFishing }}
-        {{battle-attribute-checkbox isCheckbox=true labelText="Is Surfing?" bindValue=isSurfing }}
-        {{battle-attribute-checkbox isCheckbox=true labelText="Is Underwater?" bindValue=isUnderwater }}
-        {{battle-attribute-checkbox inputType="number" labelText="Number of turns" bindValue=battleTurnsCount }}
+        {{battle-attribute-checkbox labelText="Dark" bindValue=isDusk }}
+        {{battle-attribute-checkbox labelText="Fishing" bindValue=isFishing }}
+        {{battle-attribute-checkbox labelText="Surfing" bindValue=isSurfing }}
+        {{battle-attribute-checkbox labelText="Underwater" bindValue=isUnderwater }}
+        <div class="battle-attribute battle-attribute-count">
+            <label>
+                Number of turns
+                {{input type="number" min="1" max="15" value=battleTurnsCount viewName="inputId" }}
+            </label>
+        </div>
     </div>
 </script>
 
 <script type="text/x-handlebars" id="components/battle-attribute-checkbox">
-    <label>
+    {{input type="checkbox" checked=bindValue viewName="inputId"}}
+    <label {{bind-attr for="view.inputId.elementId"}} class="battle-attribute-checkbox">
         {{labelText}}
-        {{#if isCheckbox}}
-            {{input type="checkbox" checked=bindValue}}
-        {{else}}
-            {{input type=inputType value=bindValue}}
-        {{/if}}
     </label>
 </script>
 

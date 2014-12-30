@@ -195,7 +195,9 @@ App.IndexController = Ember.Controller.extend({
  * BattleAttributeCheckboxComponent binds to {{battle-attribute-checkbox }}, which is bound to:
  *  script type="text/x-handlebars" id="components/battle-attribute-checkbox"
  */
-App.BattleAttributeCheckboxComponent = Ember.Component.extend({});
+App.BattleAttributeCheckboxComponent = Ember.Component.extend({
+	classNames: ['battle-attribute']
+});
 
 // Views
 App.PokeballView = Ember.View.extend({

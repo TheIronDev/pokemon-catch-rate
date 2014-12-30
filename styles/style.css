@@ -110,9 +110,34 @@ h1 {text-align: center;}
 .range-current-hp.range-low {
     background: red;
 }
+
+
 .battle-attributes {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
+    padding: 0.5em;
+}
+.battle-attribute {
+    display: inline-block;
+    width: 50%;
+    max-width: 16%;
+}
+.battle-attribute.battle-attribute-count {
+    max-width: 33%;
+}
+.battle-attribute label {
+    border: 1px solid #ccc;
+    display: block;
+    padding: 0.5em;
+    text-align: center;
+}
+
+.battle-attribute .ember-checkbox {display: none;}
+.battle-attribute .ember-checkbox + label {cursor: pointer}
+.battle-attribute .ember-checkbox:checked + label,
+.battle-attribute.battle-attribute-count label {
+    background: rgb(29, 130, 160);
+    color: #efefef;
 }
 
 /** Pokeball list **/
