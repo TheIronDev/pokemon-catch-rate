@@ -110,15 +110,15 @@
 <script type="text/x-handlebars" id="pokeball-list">
     <ul class="pokeball-list">
         {{#each pokeball in model.pokeballs}}
-            {{render "pokeball" pokeball}}
+            {{view "pokeball" name=pokeball.name catchRate=pokeball.catchRate spriteClass=pokeball.spriteClass}}
         {{/each}}
     </ul>
 </script>
 
 <script type="text/x-handlebars" id="pokeball">
-    <i {{bind-attr class="spriteClass"}} />
-    <div class="pokeball-name">{{name}}</div>
-    {{catchRate}}%
+    <i {{bind-attr class="view.spriteClass"}} />
+    <div class="pokeball-name">{{view.name}}</div>
+    <div class="catchRate">{{view.catchRate}}%</div>
 </script>
 
 <script type="text/x-handlebars" data-template-name="loading">

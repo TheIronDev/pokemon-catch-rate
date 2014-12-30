@@ -12,10 +12,27 @@ h1 {text-align: center;}
     from {transform: rotate(0deg);}
     to {transform: rotate(360deg);}
 }
-
 @keyframes loaderSpins {
     from {transform: rotate(0deg);}
     to {transform: rotate(360deg);}
+}
+
+/** Pokeball catchRate Change animations **/
+@-webkit-keyframes pokeballHasIncreased {
+    from {color: green;transform: scale(1.5)}
+    to {}
+}
+@keyframes pokeballHasIncreased {
+    from {color: green;transform: scale(1.5)}
+    to {}
+}
+@-webkit-keyframes pokeballHasDecreased {
+    from {color: red;transform: scale(1.5)}
+    to {color: #000;}
+}
+@keyframes pokeballHasDecreased {
+    from {background: red;transform: scale(1.5)}
+    to {color: #000;}
 }
 
 .container {
@@ -111,7 +128,7 @@ h1 {text-align: center;}
     background: red;
 }
 
-
+/** Battle Attributes **/
 .battle-attributes {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
@@ -131,7 +148,6 @@ h1 {text-align: center;}
     padding: 0.5em;
     text-align: center;
 }
-
 .battle-attribute .ember-checkbox {display: none;}
 .battle-attribute .ember-checkbox + label {cursor: pointer}
 .battle-attribute .ember-checkbox:checked + label,
@@ -152,6 +168,14 @@ h1 {text-align: center;}
     display: inline-block;
     padding: 5px;
     vertical-align: top;
+}
+.pokeball-list .pokeball.hasIncreased .catchRate {
+    -webkit-animation: pokeballHasIncreased 1s;
+    animation: pokeballHasIncreased 1s;
+}
+.pokeball-list .pokeball.hasDecreased .catchRate {
+    -webkit-animation: pokeballHasDecreased 1s;
+    animation: pokeballHasDecreased 1s;
 }
 .pokeball-list .pokeball .pokeball-name {
     font-size: 0.8em;
