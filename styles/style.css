@@ -27,26 +27,24 @@ h1 {text-align: center;}
     position: relative;
 }
 
+/** Loader **/
 .loading-pane {
     height: 15em;
     width: 100%;
     display: table;
 }
-
 .loading-message {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
     width: 100%;
 }
-
 .spinner-wrapper {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
 }
-
 .spinner {
     height: 15em;
     width: 15em;
@@ -67,10 +65,8 @@ h1 {text-align: center;}
     -webkit-animation: loaderSpins 1s linear infinite;
     animation: loaderSpins 1s linear infinite;
 }
-
 .spinner:after {
     content: ' ';
-
 
     height: 3em;
     width: 3em;
@@ -91,32 +87,35 @@ h1 {text-align: center;}
 
 }
 
-
-.wild-pokemon {
-    margin-left: 35%;
-    text-align: right;
-    width: 65%;
+/** Pokemon **/
+.battle-pokemon {
+    display: inline-block;
+    width: 49%;
+    vertical-align: middle;
 }
-
+.wild-pokemon {
+    text-align: right;
+}
+.selectedWildPokemon {
+    text-align: right;
+}
 .range-current-hp {
     -webkit-appearance: initial;
     height: 0.5em;
     background: green;
 }
-
 .range-current-hp.range-medium {
     background: yellow;
 }
-
 .range-current-hp.range-low {
     background: red;
 }
-
 .battle-attributes {
     border-top: 1px solid #fff;
     border-bottom: 1px solid #fff;
 }
 
+/** Pokeball list **/
 .pokeball-list {
     margin: 0;
     padding: 0;
@@ -124,7 +123,6 @@ h1 {text-align: center;}
     text-align: center;
     transition: all .5s ease;
 }
-
 .pokeball-list .pokeball {
     display: inline-block;
     padding: 5px;
@@ -134,39 +132,35 @@ h1 {text-align: center;}
     font-size: 0.8em;
 }
 
+/** Pokeball Sprites **/
 .pokeball-icon {
-    background: url(/images/pokeballs.png) no-repeat;
+    background: url(/pokemon-catch-rate/images/pokeballs.png) no-repeat;
     height: 40px;
     width: 42px;
     display: block;
     background-size: 15em;
     margin: 0 auto;
 }
-
 .pokeball-icon-1 {background-position: -0 0;}
 .pokeball-icon-2 {background-position: -50px 0;}
 .pokeball-icon-3 {background-position: -98px 0;}
 .pokeball-icon-4 {background-position: -150px 0;}
 .pokeball-icon-5 {background-position: -198px 0;}
-
 .pokeball-icon-6 {background-position: 0 -50px;}
 .pokeball-icon-7 {background-position: -50px -50px;}
 .pokeball-icon-8 {background-position: -98px -50px;}
 .pokeball-icon-9 {background-position: -150px -50px;}
 .pokeball-icon-10 {background-position: -198px -50px;}
-
 .pokeball-icon-11 {background-position: 0 -99px;}
 .pokeball-icon-12 {background-position: -50px -99px;}
 .pokeball-icon-13 {background-position: -98px -99px;}
 .pokeball-icon-14 {background-position: -150px -99px;}
 .pokeball-icon-15 {background-position: -198px -99px;}
-
 .pokeball-icon-16 {background-position: 0 -148px;}
 .pokeball-icon-17 {background-position: -50px -148px;}
 .pokeball-icon-18 {background-position: -98px -148px;}
 .pokeball-icon-19 {background-position: -150px -148px;}
 .pokeball-icon-20 {background-position: -198px -148px;}
-
-.pokeball-icon-21 {background-position: 0 -198px}
-.pokeball-icon-22 {background-position: -50px -198px}
-.pokeball-icon-23 {background-position: -98px -198px}
+.pokeball-icon-21 {background-position: 0 -198px;}
+.pokeball-icon-22 {background-position: -50px -198px;}
+.pokeball-icon-23 {background-position: -98px -198px;}

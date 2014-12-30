@@ -47,6 +47,9 @@ App.IndexController = Ember.Controller.extend({
 	battleTurnsCount: 1,
 	genderList: ['♂', '♀'],
 	hasLoadedData: false,
+	pokemonSprite: function() {
+		return '/pokemon-catch-rate/images/pokemon/' +this.get('selectedWildPokemon.id') + '.png';
+	}.property('selectedWildPokemon.id'),
 	currentHPPercentString: function() {
 		var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
 		return (currentHPPercent === 1 ? 1 : currentHPPercent + '%');

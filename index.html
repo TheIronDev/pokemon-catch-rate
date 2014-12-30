@@ -16,7 +16,17 @@
 
 <script type="text/x-handlebars" id="index">
 
-    <div class="wild-pokemon">
+    <div class="battle-pokemon trainer-pokemon" >
+        {{pokemon-details
+            bindedPokemon=selectedTrainerPokemon
+            bindedLevel=selectedTrainerPokemonLevel
+            bindedGender=selectedTrainerPokemonGender
+            pokemonList=model.pokemon
+            genderList=genderList
+            levelList=model.levels }}
+    </div>
+
+    <div class="battle-pokemon wild-pokemon">
 
         {{pokemon-details
             bindedPokemon=selectedWildPokemon
@@ -40,23 +50,9 @@
         </div>
 
         <div class="selectedWildPokemon">
-            Selected Pokemon:<br/>
-            Name: {{selectedWildPokemon.name}}<br/>
-            Level: {{selectedWildPokemon.level}}<br/>
-            BaseHP: {{selectedWildPokemon.baseHP}}<br/>
-            MaxHP: {{selectedWildPokemon.maxHP}}
+            <img {{bind-attr src="pokemonSprite"}} />
         </div>
 
-    </div>
-
-    <div class="trainer-pokemon" >
-        {{pokemon-details
-            bindedPokemon=selectedTrainerPokemon
-            bindedLevel=selectedTrainerPokemonLevel
-            bindedGender=selectedTrainerPokemonGender
-            pokemonList=model.pokemon
-            genderList=genderList
-            levelList=model.levels }}
     </div>
 
     {{render 'battle-attributes' this }}
