@@ -67,23 +67,7 @@ App.IndexController = Ember.Controller.extend({
 
 		return 'background: linear-gradient(to right, '+ color +' 0%, '+ color +' '+currentHPPercent+'%, transparent ' + currentHPPercentEdge + '%, transparent 100%);';
 	}.property('currentHPPercent'),
-	currentStatusObserver: function() {
-		var currentStatus = this.get('currentStatus'),
-			pokeballs = this.get('model.pokeballs');
 
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('currentStatus', currentStatus);
-		});
-	}.observes('currentStatus'),
-	currentHPPercentObserver: function(){
-		var hpPercent = this.get('currentHPPercent'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('currentHPPercent', hpPercent);
-		});
-
-	}.observes('currentHPPercent'),
 	selectedWildPokemonObserver: function() {
 		var selectedWildPokemon = this.get('selectedWildPokemon'),
 			hasBeenCaughtBefore = selectedWildPokemon.get('hasBeenCaughtBefore'),
@@ -105,25 +89,6 @@ App.IndexController = Ember.Controller.extend({
 		});
 	}.observes('selectedWildPokemonLevel'),
 
-	selectedTrainerPokemonObserver: function() {
-		var selectedWildPokemon = this.get('selectedTrainerPokemon'),
-			hasBeenCaughtBefore = selectedWildPokemon.get('hasBeenCaughtBefore'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('selectedTrainerPokemon', selectedWildPokemon);
-		});
-
-	}.observes('selectedTrainerPokemon'),
-	selectedTrainerPokemonLevelObserver: function() {
-		var selectedTrainerPokemonLevel = this.get('selectedTrainerPokemonLevel') || 1,
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('selectedTrainerPokemonLevel', selectedTrainerPokemonLevel);
-		});
-	}.observes('selectedTrainerPokemonLevel'),
-
 	selectedWildPokemonHasBeenCaught: function() {
 
 		var hasBeenCaughtBefore = this.get('hasBeenCaughtBefore'),
@@ -135,58 +100,16 @@ App.IndexController = Ember.Controller.extend({
 
 	}.observes('hasBeenCaughtBefore'),
 
-	isDuskObserver: function() {
-		var isDusk = this.get('isDusk'),
+	pokeballObservers: function(controller, changedAttribute) {
+		var changedAttributeValue = this.get(changedAttribute),
 			pokeballs = this.get('model.pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('isDusk', isDusk);
+			pokeball.set(changedAttribute, changedAttributeValue);
 		});
-	}.observes('isDusk'),
-	isFishingObserver: function () {
-		var isFishing = this.get('isFishing'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('isFishing', isFishing);
-		});
-	}.observes('isFishing'),
-	isSurfingObserver: function () {
-		var isSurfing = this.get('isSurfing'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('isSurfing', isSurfing);
-		});
-	}.observes('isSurfing'),
-	isUnderwaterObserver: function () {
-		var isUnderwater = this.get('isUnderwater'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('isUnderwater', isUnderwater);
-		});
-	}.observes('isUnderwater'),
-
-	pokemonGenderObserver: function(controller, changedAttribute) {
-		// TODO: refactor the observers to use the changedAttributes.
-		var selectedGenderDropdownValue = this.get(changedAttribute),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set(changedAttribute, selectedGenderDropdownValue);
-		});
-
-	}.observes('selectedWildPokemonGender', 'selectedTrainerPokemonGender'),
-
-	battleTurnsCountObserver: function() {
-		var battleTurnsCount = this.get('battleTurnsCount'),
-			pokeballs = this.get('model.pokeballs');
-
-		pokeballs.forEach( function( pokeball ) {
-			pokeball.set('battleTurnsCount', battleTurnsCount);
-		});
-	}.observes('battleTurnsCount')
+	}.observes('battleTurnsCount', 'selectedWildPokemonGender', 'selectedTrainerPokemonGender', 'isUnderwater',
+		'isSurfing', 'isFishing', 'isDusk', 'selectedTrainerPokemonLevel', 'selectedTrainerPokemon', 'currentHPPercent',
+		'currentStatus')
 });
 
 // Components
@@ -330,7 +253,7 @@ App.Pokeball.reopenClass({
 						wildPokemonGender = this.get('selectedWildPokemonGender');
 
 					if (trainerPokemonId === wildPokemonId &&
-						trainerPokemonGender === wildPokemonGender) {
+						trainerPokemonGender !== wildPokemonGender) {
 						return 8;
 					}
 					return 1;
