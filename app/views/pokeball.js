@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import $ from 'jquery';
 import ENV from 'pokemon-catch-rate/config/environment';
 
 export default Ember.View.extend({
@@ -31,6 +32,6 @@ export default Ember.View.extend({
       $this.removeClass('hasIncreased hasDecreased');
     });
 
-    this.set('oldCatchRate', catchRate)
+    this.set('oldCatchRate', catchRate);
   }.observes('catchRate')
 });

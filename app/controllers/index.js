@@ -21,8 +21,9 @@ export default Ember.Controller.extend({
   genderList: ['♂', '♀'],
   hasLoadedData: false,
   pokemonSprite: function() {
-    if (this.get('selectedWildPokemon.id'))
+    if (this.get('selectedWildPokemon.id')) {
       return ENV.baseURL + 'assets/images/pokemon/' +this.get('selectedWildPokemon.id') + '.png';
+    }
   }.property('selectedWildPokemon.id'),
   currentHPPercentString: function() {
     var currentHPPercent = parseInt(this.get('currentHPPercent'), 10);
