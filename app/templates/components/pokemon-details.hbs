@@ -1,0 +1,22 @@
+<div class="pokemon-details">
+
+  {{#if pokemonList }}
+    {{view "select"
+    value=bindedPokemon
+    content=pokemonList
+    optionLabelPath="content.name" }}
+  {{else}}
+    {{view "select"
+    prompt="Loading..." }}
+  {{/if}}
+
+  {{view "select"
+  value=bindedGender
+  content=genderList }}
+
+    Lv.
+  {{view "select"
+  value=bindedLevel
+  content=levelList
+  }}
+</div>

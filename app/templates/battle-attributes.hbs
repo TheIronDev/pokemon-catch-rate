@@ -1,0 +1,12 @@
+<div class="battle-attributes">
+  {{battle-attribute-checkbox labelText="Dark" bindValue=isDusk }}
+  {{battle-attribute-checkbox labelText="Fishing" bindValue=isFishing }}
+  {{battle-attribute-checkbox labelText="Surfing" bindValue=isSurfing }}
+  {{battle-attribute-checkbox labelText="Underwater" bindValue=isUnderwater }}
+    <div class="battle-attribute battle-attribute-count">
+        <label>
+            Number of turns
+          {{input type="number" min="1" max="15" value=battleTurnsCount viewName="inputId" }}
+        </label>
+    </div>
+</div>

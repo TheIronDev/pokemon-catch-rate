@@ -1,0 +1,5 @@
+<ul class="pokeball-list">
+  {{#each pokeball in pokeballs}}
+    {{view "pokeball" name=pokeball.name catchRate=pokeball.catchRate spriteClass=pokeball.spriteClass}}
+  {{/each}}
+</ul>
