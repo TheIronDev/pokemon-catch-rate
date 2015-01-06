@@ -15,23 +15,7 @@ App.Router.map(function() {
 // The IndexRoute maps to / or /#index
 App.IndexRoute = Ember.Route.extend({
 	model: function() {
-		/**
-		 * The original implementation used DS.FixtureAdapter to fetch the data. This was not the correct approach,
-		 * as the DS.FixtureAdapter was meant to represent what would/should be a persistance record.
-		 */
-		var store = this.store;
-
-		/**
-		 * Ember is very promise driven, and comes with RSVP as a helper method.  What this really says is:
-		 * "Once I have fetched all of these promises, return a hash of everything". Once we remove the this.store,
-		 * we will no longer need RSVP.hash, but its useful to know about.
-		 */
-		return Ember.RSVP.hash({
-			pokeballs: App.Pokeball.all(),
-			pokemon: store.find('pokemon'),
-			status: App.Status.all(),
-			levels: App.Levels
-		});
+		return this.store.find('pokemon');
 	}
 });
 
@@ -43,6 +27,15 @@ App.IndexRoute = Ember.Route.extend({
  * relationship between the controller's state and the models.
  */
 App.IndexController = Ember.Controller.extend({
+	levels: function(){
+	  return App.Levels; 
+	}.property(),
+	pokeballs: function(){
+	  return App.Pokeball.all()
+	}.property(),
+	status: function(){
+	  return App.Status.all();
+	}.property(),
 	currentHPPercent: 100,
 	battleTurnsCount: 1,
 	genderList: ['♂', '♀'],
@@ -71,7 +64,7 @@ App.IndexController = Ember.Controller.extend({
 	selectedWildPokemonObserver: function() {
 		var selectedWildPokemon = this.get('selectedWildPokemon'),
 			hasBeenCaughtBefore = selectedWildPokemon.get('hasBeenCaughtBefore'),
-			pokeballs = this.get('model.pokeballs');
+			pokeballs = this.get('pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
 			pokeball.set('selectedWildPokemon', selectedWildPokemon);
@@ -82,7 +75,7 @@ App.IndexController = Ember.Controller.extend({
 	}.observes('selectedWildPokemon'),
 	selectedWildPokemonLevelObserver: function() {
 		var selectedWildPokemonLevel = this.get('selectedWildPokemonLevel') || 1,
-			pokemonList = this.get('model.pokemon');
+			pokemonList = this.get('model');
 
 		pokemonList.forEach( function( pokemon ) {
 			pokemon.set('level', selectedWildPokemonLevel);
@@ -102,7 +95,7 @@ App.IndexController = Ember.Controller.extend({
 
 	pokeballObservers: function(controller, changedAttribute) {
 		var changedAttributeValue = this.get(changedAttribute),
-			pokeballs = this.get('model.pokeballs');
+			pokeballs = this.get('pokeballs');
 
 		pokeballs.forEach( function( pokeball ) {
 			pokeball.set(changedAttribute, changedAttributeValue);
@@ -434,3 +427,4 @@ App.Levels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19,
 	30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57,
 	58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85,
 	86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+

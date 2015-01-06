@@ -21,9 +21,9 @@
             bindedPokemon=selectedTrainerPokemon
             bindedLevel=selectedTrainerPokemonLevel
             bindedGender=selectedTrainerPokemonGender
-            pokemonList=model.pokemon
+            pokemonList=model
             genderList=genderList
-            levelList=model.levels }}
+            levelList=levels }}
     </div>
 
     <div class="battle-pokemon wild-pokemon">
@@ -32,14 +32,14 @@
             bindedPokemon=selectedWildPokemon
             bindedLevel=selectedWildPokemonLevel
             bindedGender=selectedWildPokemonGender
-            pokemonList=model.pokemon
+            pokemonList=model
             genderList=genderList
-            levelList=model.levels }}
+            levelList=levels }}
 
         <div>
             {{view "select"
                 value=currentStatus
-                content=model.status
+                content=status
                 optionLabelPath="content.name"
                 prompt="Status"
                 }}
@@ -109,7 +109,7 @@
 
 <script type="text/x-handlebars" id="pokeball-list">
     <ul class="pokeball-list">
-        {{#each pokeball in model.pokeballs}}
+        {{#each pokeball in pokeballs}}
             {{view "pokeball" name=pokeball.name catchRate=pokeball.catchRate spriteClass=pokeball.spriteClass}}
         {{/each}}
     </ul>
