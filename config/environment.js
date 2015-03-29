@@ -4,7 +4,7 @@ module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'pokemon-catch-rate',
     environment: environment,
-    baseURL: '/pokemon-catch-rate',
+    baseURL: '/pokemon-catch-rate/',
     locationType: 'hash',
     EmberENV: {
       FEATURES: {
