@@ -4,6 +4,7 @@
 
 html {
   background: #efefef;
+  font-family: "Helvetica Neue", "Helvetica", "Arial";
 }
 
 h1 {text-align: center;}
@@ -36,9 +37,10 @@ h1 {text-align: center;}
 }
 
 .container {
-  border: 1px solid #fff;
+  border: 1px solid #ccc;
   margin: 0 auto;
   max-width: 600px;
+  padding: 0.5em;
   width: 100%;
 
   position: relative;
@@ -106,6 +108,7 @@ h1 {text-align: center;}
 
 /** Pokemon **/
 .battle-pokemon {
+  border: 1px solid #ccc;
   display: inline-block;
   width: 49%;
   vertical-align: middle;
@@ -115,6 +118,9 @@ h1 {text-align: center;}
 }
 .selectedWildPokemon {
   text-align: right;
+}
+.selectedWildPokemon img {
+  max-height: 5em;
 }
 .range-current-hp {
   -webkit-appearance: initial;
@@ -130,17 +136,17 @@ h1 {text-align: center;}
 
 /** Battle Attributes **/
 .battle-attributes {
-  border-top: 1px solid #fff;
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid #848484;
   padding: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 .battle-attribute {
   display: inline-block;
-  width: 50%;
-  max-width: 16%;
 }
 .battle-attribute.battle-attribute-count {
-  max-width: 33%;
 }
 .battle-attribute label {
   border: 1px solid #ccc;
@@ -167,6 +173,8 @@ h1 {text-align: center;}
 .pokeball-list .pokeball {
   display: inline-block;
   padding: 5px;
+  margin: 2px;
+  min-width: 5em;
   vertical-align: top;
 }
 .pokeball-list .pokeball.hasIncreased .catchRate {
@@ -213,3 +221,36 @@ h1 {text-align: center;}
 .pokeball-icon-21 {background-position: 0 -198px !important;;}
 .pokeball-icon-22 {background-position: -50px -198px !important;;}
 .pokeball-icon-23 {background-position: -98px -198px !important;;}
+
+.about {
+  border-top: 1px solid #000;
+}
+.about .gravatar {
+  border-radius: 50%;
+  padding: 0.5em;
+  vertical-align:middle;
+}
+.about-content {
+  max-width: 49%;
+  display: inline-block;
+  padding: 0 1em;
+  vertical-align:middle;
+}
+.about .projects {
+  vertical-align: top;
+  list-style: none;
+}
+.about .projects li {
+  display: inline-block;
+  width: 32%;
+  text-align: center;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 400px) {
+  .battle-pokemon {
+    padding: 0.5em;
+    text-align: center;
+    width: 100%;
+  }
+}

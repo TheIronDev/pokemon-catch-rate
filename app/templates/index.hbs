@@ -1,4 +1,5 @@
 <div class="battle-pokemon trainer-pokemon" >
+    Trainer Pokemon
   {{pokemon-details
   bindedPokemon=selectedTrainerPokemon
   bindedLevel=selectedTrainerPokemonLevel
@@ -9,7 +10,7 @@
 </div>
 
 <div class="battle-pokemon wild-pokemon">
-
+    Wild Pokemon
   {{pokemon-details
   bindedPokemon=selectedWildPokemon
   bindedLevel=selectedWildPokemonLevel
@@ -40,3 +41,5 @@
 {{render 'battle-attributes' this }}
 
 {{partial 'pokeball-list' pokeballs=pokeballs }}
+
+{{partial 'about-project' pokeballs=pokeballs }}

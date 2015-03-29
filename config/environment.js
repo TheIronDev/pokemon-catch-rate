@@ -41,8 +41,8 @@ module.exports = function(environment) {
   }
 
   if (environment === 'production') {
-    ENV.location = 'hash';
-    ENV.baseURL = '/pokemon-catch-rate';
+
+    ENV.baseURL = '/pokemon-catch-rate/';
   }
 
   return ENV;
