@@ -63,6 +63,8 @@ cite {
 .container {
   background: rgba(255,255,255,0.8);
   border: 1px solid #848484;
+  border-radius: 1em;
+  box-shadow: 0 0 1em #666;
   margin: 0 auto;
   max-width: 600px;
   padding: 0.5em;
@@ -134,12 +136,12 @@ cite {
 /** Pokemon **/
 .battle-pokemon {
   border: 1px solid #848484;
+  border-radius: 0.5em;
   display: inline-block;
+  padding: 0.5em 0;
+  text-align:center;
   width: 49%;
   vertical-align: middle;
-}
-.wild-pokemon {
-  text-align: right;
 }
 .selectedWildPokemon {
   text-align: right;
@@ -177,6 +179,7 @@ cite {
   border: 1px solid #848484;
   display: block;
   padding: 0.5em;
+  margin: 0.5em;
   text-align: center;
 }
 .battle-attribute .ember-checkbox {display: none;}
@@ -189,7 +192,7 @@ cite {
 
 /** Pokeball list **/
 .pokeball-list {
-  margin: 0;
+  margin: 0 0 2em;
   padding: 0;
   overflow: hidden;
   text-align: center;
