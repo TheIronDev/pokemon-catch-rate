@@ -2,6 +2,20 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: octicons;
+  src: url("https://cdnjs.cloudflare.com/ajax/libs/octicons/2.2.0/octicons.woff");
+  font-weight:400;
+}
+
+.github-icon {
+  text-decoration: none;
+}
+.github-icon:before {
+  font-family: 'octicons';
+  content: '\f00a'
+}
+
 html {
   background: #efefef;
   font-family: "Helvetica Neue", "Helvetica", "Arial";
@@ -224,14 +238,15 @@ h1 {text-align: center;}
 
 .about {
   border-top: 1px solid #000;
+  padding: 0.5em;
 }
 .about .gravatar {
   border-radius: 50%;
-  padding: 0.5em;
-  vertical-align:middle;
+  margin: 0 0.5em 0.5em 0;
+  float: left;
 }
 .about-content {
-  max-width: 49%;
+  max-width: 100%;
   display: inline-block;
   padding: 0 1em;
   vertical-align:middle;
@@ -252,5 +267,9 @@ h1 {text-align: center;}
     padding: 0.5em;
     text-align: center;
     width: 100%;
+  }
+  .about .projects li {
+    width: 100%;
+    margin-bottom: 1em;
   }
 }
