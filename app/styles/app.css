@@ -17,11 +17,21 @@
 }
 
 html {
-  background: #efefef;
   font-family: "Helvetica Neue", "Helvetica", "Arial";
+  background: url('/pokemon-catch-rate/assets/images/background.jpg') no-repeat bottom right #86D4EB;
+  background-size: 450px;
+  background-attachment: fixed;
+}
+
+body {
+  margin: 0;
 }
 
 h1 {text-align: center;}
+cite {
+  font-size: 0.5em;
+  margin-right: 0.5em;
+}
 
 @-webkit-keyframes loaderSpins {
   from {transform: rotate(0deg);}
@@ -51,7 +61,8 @@ h1 {text-align: center;}
 }
 
 .container {
-  border: 1px solid #ccc;
+  background: rgba(255,255,255,0.8);
+  border: 1px solid #848484;
   margin: 0 auto;
   max-width: 600px;
   padding: 0.5em;
@@ -122,7 +133,7 @@ h1 {text-align: center;}
 
 /** Pokemon **/
 .battle-pokemon {
-  border: 1px solid #ccc;
+  border: 1px solid #848484;
   display: inline-block;
   width: 49%;
   vertical-align: middle;
@@ -163,7 +174,7 @@ h1 {text-align: center;}
 .battle-attribute.battle-attribute-count {
 }
 .battle-attribute label {
-  border: 1px solid #ccc;
+  border: 1px solid #848484;
   display: block;
   padding: 0.5em;
   text-align: center;
